@@ -351,7 +351,7 @@ function ValoxUI:CreateWindow(options)
         local TabBtn = Create("TextButton", {
             Name = TabTitle,
             Size = UDim2.new(1, -20, 0, 35),
-            BackgroundColor3 = self.Theme.Sidebar,
+            BackgroundColor3 = ValoxUI.Theme.Sidebar,
             BackgroundTransparency = 1,
             Text = "",
             AutoButtonColor = false,
@@ -365,7 +365,7 @@ function ValoxUI:CreateWindow(options)
             Position = UDim2.fromOffset(35, 0),
             BackgroundTransparency = 1,
             Text = TabTitle,
-            TextColor3 = self.Theme.TextMuted,
+            TextColor3 = ValoxUI.Theme.TextMuted,
             TextXAlignment = Enum.TextXAlignment.Left,
             Font = FontSemiBold,
             TextSize = 13,
@@ -378,7 +378,7 @@ function ValoxUI:CreateWindow(options)
             Position = UDim2.new(0, 10, 0.5, -8),
             BackgroundTransparency = 1,
             Image = TabIcon,
-            ImageColor3 = self.Theme.TextMuted,
+            ImageColor3 = ValoxUI.Theme.TextMuted,
             Parent = TabBtn
         })
 
@@ -389,7 +389,7 @@ function ValoxUI:CreateWindow(options)
             Position = UDim2.fromOffset(10, 10),
             BackgroundTransparency = 1,
             ScrollBarThickness = 2,
-            ScrollBarImageColor3 = self.Theme.Border,
+            ScrollBarImageColor3 = ValoxUI.Theme.Border,
             CanvasSize = UDim2.new(0, 0, 0, 0),
             Visible = false,
             Parent = ContentContainer
@@ -430,14 +430,14 @@ function ValoxUI:CreateWindow(options)
             for _, t in pairs(Window.Tabs) do
                 t.Content.Visible = false
                 TweenService:Create(t.Button, TweenInfo.new(0.3), {BackgroundTransparency = 1}):Play()
-                TweenService:Create(t.Button.Title, TweenInfo.new(0.3), {TextColor3 = self.Theme.TextMuted}):Play()
-                TweenService:Create(t.Button.Icon, TweenInfo.new(0.3), {ImageColor3 = self.Theme.TextMuted}):Play()
+                TweenService:Create(t.Button.Title, TweenInfo.new(0.3), {TextColor3 = ValoxUI.Theme.TextMuted}):Play()
+                TweenService:Create(t.Button.Icon, TweenInfo.new(0.3), {ImageColor3 = ValoxUI.Theme.TextMuted}):Play()
             end
 
             TabContent.Visible = true
-            TweenService:Create(TabBtn, TweenInfo.new(0.3), {BackgroundTransparency = 0, BackgroundColor3 = self.Theme.Accent}):Play()
-            TweenService:Create(TabBtnText, TweenInfo.new(0.3), {TextColor3 = self.Theme.Text}):Play()
-            TweenService:Create(TabBtnIcon, TweenInfo.new(0.3), {ImageColor3 = self.Theme.Text}):Play()
+            TweenService:Create(TabBtn, TweenInfo.new(0.3), {BackgroundTransparency = 0, BackgroundColor3 = ValoxUI.Theme.Accent}):Play()
+            TweenService:Create(TabBtnText, TweenInfo.new(0.3), {TextColor3 = ValoxUI.Theme.Text}):Play()
+            TweenService:Create(TabBtnIcon, TweenInfo.new(0.3), {ImageColor3 = ValoxUI.Theme.Text}):Play()
             Window.CurrentTab = TabTitle
         end
 

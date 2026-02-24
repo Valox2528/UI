@@ -5570,7 +5570,7 @@ Thickness=1.5,
 Transparency=1,
 ApplyStrokeMode="Border",
 })
-}})
+})
 }),
 
 
@@ -6149,23 +6149,15 @@ ImageColor3=Color3.new(1,1,1),
 Name="Highlight",
 ImageTransparency=.6,
 },{
-
-
-
-
-
-
-
-
-
-
-
-
-
-}),
-}})
-}})
-}})
+ab("UIStroke",{
+Color=Color3.fromHex"#00FFFF",
+Thickness=1,
+Transparency=0.6,
+})
+})
+})
+})
+})
 
 ak.UIElements.SliderContainer=ae("Frame",{
 Size=UDim2.new(ak.Title==nil and 1 or 0,ak.Title==nil and 0 or ak.Width,0,0),

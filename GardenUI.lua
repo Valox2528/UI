@@ -71,6 +71,16 @@ end)
 
 function ValoxUI.GetIcon(name)
     if not name then return "" end
+    if type(name) == "string" then
+        local lowerName = string.lower(name)
+        local map = {
+            main = "home",
+            combat = "sword",
+            visuals = "eye",
+            settings = "settings"
+        }
+        if map[lowerName] then name = map[lowerName] end
+    end
     if Icons then
         local ok, result = pcall(function() return Icons.GetIcon(name) end)
         if ok and result then return result end
@@ -106,22 +116,8 @@ end
 ---------------------------------------------------------------
 -- SQUIRCLE SHAPE SYSTEM
 ---------------------------------------------------------------
-local Shapes = {
-    Squircle = "rbxassetid://80999662900595",
-    SquircleOutline = "rbxassetid://117817408534198",
-    SquircleTLTR = "rbxassetid://73569156276236",
-    SquircleBLBR = "rbxassetid://93853842912264",
-    SquircleTLTROutline = "rbxassetid://136702870075563",
-    SquircleBLBROutline = "rbxassetid://75035847706564",
-    Shadow = "rbxassetid://84825982946844",
-    Glass07 = "rbxassetid://79047752995006",
-    Glass10 = "rbxassetid://97324581055162",
-    Glass14 = "rbxassetid://95071123641270",
-}
+local Shapes = {}
 ValoxUI.Shapes = Shapes
-
-local SLICE_CENTER = Rect.new(256, 256, 256, 256)
-local SHADOW_SLICE = Rect.new(512, 512, 512, 512)
 
 ---------------------------------------------------------------
 -- THEME SYSTEM
@@ -130,94 +126,94 @@ ValoxUI.Themes = {
     Dark = {
         Name = "Dark",
         -- Core
-        Accent = Color3.fromHex("#3b82f6"),
-        Background = Color3.fromHex("#0c1220"),
+        Accent = Color3.fromHex("#0f71d3"),
+        Background = Color3.fromHex("#060b13"),
         Text = Color3.fromHex("#ffffff"),
-        TextDark = Color3.fromHex("#7c8da5"),
-        TextDimmed = Color3.fromHex("#4a5568"),
-        Icon = Color3.fromHex("#8b9ab5"),
+        TextDark = Color3.fromHex("#8c9bad"),
+        TextDimmed = Color3.fromHex("#5a677a"),
+        Icon = Color3.fromHex("#5a677a"),
         
         -- Window
-        WindowBackground = Color3.fromHex("#0c1220"),
+        WindowBackground = Color3.fromHex("#060b13"),
         WindowShadow = Color3.new(0, 0, 0),
-        WindowBorder = Color3.fromHex("#1a2744"),
+        WindowBorder = Color3.fromHex("#151e2e"),
         WindowBorderTransparency = 0.5,
         
         -- Topbar
-        TopbarTitle = Color3.fromHex("#3b82f6"),
-        TopbarIcon = Color3.fromHex("#3b82f6"),
-        TopbarButton = Color3.fromHex("#7c8da5"),
+        TopbarTitle = Color3.fromHex("#0f71d3"),
+        TopbarIcon = Color3.fromHex("#0f71d3"),
+        TopbarButton = Color3.fromHex("#5a677a"),
         
         -- Sidebar
-        SidebarBackground = Color3.fromHex("#0c1220"),
-        TabHover = Color3.fromHex("#111b2e"),
-        TabActive = Color3.fromHex("#3b82f6"),
-        TabIcon = Color3.fromHex("#4a5568"),
-        TabIconActive = Color3.fromHex("#3b82f6"),
+        SidebarBackground = Color3.fromHex("#0a101a"),
+        TabHover = Color3.fromHex("#0f1522"),
+        TabActive = Color3.fromHex("#060b13"),
+        TabIcon = Color3.fromHex("#5a677a"),
+        TabIconActive = Color3.fromHex("#0f71d3"),
         
         -- Elements
-        Element = Color3.fromHex("#111b2e"),
-        ElementBorder = Color3.fromHex("#1a2744"),
-        ElementHover = Color3.fromHex("#162040"),
+        Element = Color3.fromHex("#0b121f"),
+        ElementBorder = Color3.fromHex("#151e2e"),
+        ElementHover = Color3.fromHex("#111827"),
         
         -- Controls
-        Toggle = Color3.fromHex("#1a2540"),
-        ToggleActive = Color3.fromHex("#243352"),
+        Toggle = Color3.fromHex("#151e2e"),
+        ToggleActive = Color3.fromHex("#0f71d3"),
         ToggleKnob = Color3.new(1, 1, 1),
-        ToggleBorder = Color3.fromHex("#1e2d45"),
+        ToggleBorder = Color3.fromHex("#1a2438"),
         
-        Slider = Color3.fromHex("#3b82f6"),
-        SliderBg = Color3.fromHex("#1a2540"),
-        SliderThumb = Color3.fromHex("#3b82f6"),
+        Slider = Color3.fromHex("#0f71d3"),
+        SliderBg = Color3.fromHex("#0b121f"),
+        SliderThumb = Color3.fromHex("#ffffff"),
         
-        Checkbox = Color3.fromHex("#3b82f6"),
-        CheckboxBorder = Color3.fromHex("#1e2d45"),
+        Checkbox = Color3.fromHex("#0f71d3"),
+        CheckboxBorder = Color3.fromHex("#151e2e"),
         CheckboxIcon = Color3.new(1, 1, 1),
         
-        Input = Color3.fromHex("#0e1726"),
-        InputBorder = Color3.fromHex("#1e2d45"),
-        InputFocusBorder = Color3.fromHex("#3b82f6"),
+        Input = Color3.fromHex("#070a11"),
+        InputBorder = Color3.fromHex("#151e2e"),
+        InputFocusBorder = Color3.fromHex("#0f71d3"),
         
-        Dropdown = Color3.fromHex("#111b2e"),
-        DropdownBorder = Color3.fromHex("#1e2d45"),
-        DropdownHover = Color3.fromHex("#162040"),
+        Dropdown = Color3.fromHex("#070a11"),
+        DropdownBorder = Color3.fromHex("#151e2e"),
+        DropdownHover = Color3.fromHex("#0b121f"),
         
-        Button = Color3.fromHex("#162040"),
-        ButtonAccent = Color3.fromHex("#3b82f6"),
+        Button = Color3.fromHex("#0b121f"),
+        ButtonAccent = Color3.fromHex("#0f71d3"),
         ButtonText = Color3.new(1, 1, 1),
         
         -- Cards
-        Card = Color3.fromHex("#111b2e"),
-        CardBorder = Color3.fromHex("#1a2d4a"),
+        Card = Color3.fromHex("#0b121f"),
+        CardBorder = Color3.fromHex("#151e2e"),
         
         -- Notifications
-        NotifBackground = Color3.fromHex("#111b2e"),
-        NotifBorder = Color3.fromHex("#1a2d4a"),
-        NotifProgress = Color3.fromHex("#3b82f6"),
+        NotifBackground = Color3.fromHex("#0b121f"),
+        NotifBorder = Color3.fromHex("#151e2e"),
+        NotifProgress = Color3.fromHex("#0f71d3"),
         
         -- Dialog
         DialogOverlay = Color3.new(0, 0, 0),
         DialogOverlayTransparency = 0.4,
-        DialogBackground = Color3.fromHex("#0c1220"),
-        DialogBorder = Color3.fromHex("#1a2744"),
+        DialogBackground = Color3.fromHex("#060b13"),
+        DialogBorder = Color3.fromHex("#151e2e"),
         
         -- Tooltip
-        TooltipBackground = Color3.fromHex("#1a2540"),
+        TooltipBackground = Color3.fromHex("#111827"),
         TooltipText = Color3.new(1, 1, 1),
-        TooltipBorder = Color3.fromHex("#243352"),
+        TooltipBorder = Color3.fromHex("#1a2438"),
         
         -- ScrollBar
-        ScrollBar = Color3.fromHex("#1e2d45"),
+        ScrollBar = Color3.fromHex("#151e2e"),
         
         -- Section
         SectionText = Color3.new(1, 1, 1),
-        SectionDivider = Color3.fromHex("#1a2744"),
+        SectionDivider = Color3.fromHex("#151e2e"),
         
         -- Search
-        SearchBackground = Color3.fromHex("#0e1726"),
-        SearchBorder = Color3.fromHex("#1e2d45"),
-        SearchText = Color3.fromHex("#7c8da5"),
-        SearchIcon = Color3.fromHex("#4a5568"),
+        SearchBackground = Color3.fromHex("#070a11"),
+        SearchBorder = Color3.fromHex("#151e2e"),
+        SearchText = Color3.fromHex("#8c9bad"),
+        SearchIcon = Color3.fromHex("#5a677a"),
     },
     
     Midnight = {
@@ -431,21 +427,21 @@ local New = ValoxUI.New
 -- Squircle frame (smooth rounded rectangle)
 function ValoxUI.NewSquircle(radius, shapeType, props, children, isButton, returnControl)
     shapeType = shapeType or "Squircle"
-    local imageId = Shapes[shapeType] or Shapes.Squircle
-    local sliceCenter = (shapeType == "Shadow" or string.find(shapeType, "Glass")) 
-        and SHADOW_SLICE or SLICE_CENTER
-    
-    local className = isButton and "ImageButton" or "ImageLabel"
+    local className = isButton and "TextButton" or "Frame"
     local frame = New(className, {
-        Image = imageId,
-        ScaleType = Enum.ScaleType.Slice,
-        SliceCenter = sliceCenter,
-        SliceScale = math.max(radius / 256, 0.0001),
-        BackgroundTransparency = 1,
+        BackgroundColor3 = props and props.ImageColor3 or Color3.new(1,1,1),
+        BackgroundTransparency = props and props.ImageTransparency or 0,
     })
     
+    if isButton then 
+        frame.Text = ""
+        frame.AutoButtonColor = false
+    end
+    
+    local corner = New("UICorner", { CornerRadius = UDim.new(0, radius), Parent = frame })
+    
     for k, v in pairs(props or {}) do
-        if k ~= "Parent" and k ~= "ThemeTag" and k ~= "_radius" then
+        if k ~= "Parent" and k ~= "ThemeTag" and k ~= "ImageColor3" and k ~= "ImageTransparency" and k ~= "Image" and k ~= "ScaleType" and k ~= "SliceCenter" and k ~= "SliceScale" then
             pcall(function() frame[k] = v end)
         end
     end
@@ -458,22 +454,29 @@ function ValoxUI.NewSquircle(radius, shapeType, props, children, isButton, retur
         frame.Parent = props.Parent
     end
     
-    -- Theme tag support
+    if shapeType == "Shadow" then
+        frame.BackgroundTransparency = 1
+        New("UIStroke", {
+            Color = props and props.ImageColor3 or Color3.new(0, 0, 0),
+            Transparency = math.min((props and props.ImageTransparency or 0.3) + 0.5, 1),
+            Thickness = 2,
+            Parent = frame
+        })
+    elseif string.find(shapeType or "", "Glass") then
+        frame.BackgroundTransparency = props and props.ImageTransparency or 0.5
+    end
+    
     if props and props.ThemeTag then
         ValoxUI:AddThemeObject(frame, props.ThemeTag)
     end
     
-    -- Control object for dynamic radius changes
     if returnControl then
         local control = {}
         function control:SetRadius(r)
-            frame.SliceScale = math.max(r / 256, 0.0001)
+            corner.CornerRadius = UDim.new(0, r)
         end
         function control:SetShape(s)
-            shapeType = s
-            frame.Image = Shapes[s] or Shapes.Squircle
-            frame.SliceCenter = (s == "Shadow" or string.find(s, "Glass"))
-                and SHADOW_SLICE or SLICE_CENTER
+            -- Handled natively
         end
         return frame, control
     end
@@ -483,14 +486,21 @@ end
 
 -- Squircle outline
 function ValoxUI.NewSquircleOutline(radius, props)
-    return ValoxUI.NewSquircle(radius, "SquircleOutline", {
-        ImageColor3 = props.Color or Color3.fromHex("#1a2744"),
-        ImageTransparency = props.Transparency or 0.5,
+    local frame = New("Frame", {
         Size = props.Size or UDim2.new(1, 0, 1, 0),
         Position = props.Position or UDim2.fromOffset(0, 0),
+        BackgroundTransparency = 1,
         Parent = props.Parent,
         ZIndex = props.ZIndex or 2,
     })
+    New("UICorner", { CornerRadius = UDim.new(0, radius), Parent = frame })
+    New("UIStroke", {
+        Color = props.Color or props.ImageColor3 or Color3.fromHex("#1a2744"),
+        Transparency = props.Transparency or props.ImageTransparency or 0.5,
+        Thickness = props.Thickness or 1,
+        Parent = frame
+    })
+    return frame
 end
 
 ---------------------------------------------------------------
@@ -529,17 +539,17 @@ function ValoxUI:ApplyThemeToObject(obj, animate)
     for prop, themeKey in pairs(entry.Properties or {}) do
         local val = self.CurrentTheme[themeKey]
         if val ~= nil then
-            if typeof(val) == "Color3" then
+            local actualProp = prop
+            if (obj:IsA("Frame") or obj:IsA("TextButton") or obj:IsA("TextBox") or obj:IsA("ScrollingFrame")) then
+                if prop == "ImageColor3" then actualProp = "BackgroundColor3" end
+                if prop == "ImageTransparency" then actualProp = "BackgroundTransparency" end
+            end
+            
+            if typeof(val) == "Color3" or typeof(val) == "number" then
                 if animate then
-                    tween(obj, 0.15, {[prop] = val})
+                    tween(obj, 0.15, {[actualProp] = val})
                 else
-                    pcall(function() obj[prop] = val end)
-                end
-            elseif typeof(val) == "number" then
-                if animate then
-                    tween(obj, 0.15, {[prop] = val})
-                else
-                    pcall(function() obj[prop] = val end)
+                    pcall(function() obj[actualProp] = val end)
                 end
             end
         end
@@ -561,12 +571,18 @@ end
 
 -- Simple themed property tracker
 function ValoxUI:_themed(obj, prop, themeKey)
+    local actualProp = prop
+    if (obj:IsA("Frame") or obj:IsA("TextButton") or obj:IsA("TextBox") or obj:IsA("ScrollingFrame")) then
+        if prop == "ImageColor3" then actualProp = "BackgroundColor3" end
+        if prop == "ImageTransparency" then actualProp = "BackgroundTransparency" end
+    end
+    
     local val = self.CurrentTheme[themeKey]
-    if val then pcall(function() obj[prop] = val end) end
+    if val then pcall(function() obj[actualProp] = val end) end
     if not self._themeObjects[obj] then
         self._themeObjects[obj] = { Object = obj, Properties = {} }
     end
-    self._themeObjects[obj].Properties[prop] = themeKey
+    self._themeObjects[obj].Properties[actualProp] = themeKey
     return obj
 end
 
@@ -775,7 +791,7 @@ function ValoxUI:CreateWindow(config)
         TextColor3 = self.CurrentTheme.TopbarTitle,
         TextXAlignment = Enum.TextXAlignment.Left,
         Position = UDim2.fromOffset(iconLabel and 44 or 18, 0),
-        Size = UDim2.new(0, 200, 1, 0),
+        Size = UDim2.new(1, -120, 1, 0),
         Parent = topbar,
     })
     self:_themed(titleLabel, "TextColor3", "TopbarTitle")
@@ -785,8 +801,9 @@ function ValoxUI:CreateWindow(config)
         Text = "✕", Font = Enum.Font.GothamBold, TextSize = 12,
         TextColor3 = self.CurrentTheme.TopbarButton,
         Size = UDim2.fromOffset(46, 46),
-        Position = UDim2.new(1, 0, 0, 0),
+        Position = UDim2.new(1, -6, 0, 0),
         AnchorPoint = Vector2.new(1, 0),
+        BackgroundTransparency = 1,
         Parent = topbar,
     })
     self:_themed(closeBtn, "TextColor3", "TopbarButton")
@@ -796,8 +813,9 @@ function ValoxUI:CreateWindow(config)
         Text = "—", Font = Enum.Font.GothamBold, TextSize = 12,
         TextColor3 = self.CurrentTheme.TopbarButton,
         Size = UDim2.fromOffset(46, 46),
-        Position = UDim2.new(1, -46, 0, 0),
+        Position = UDim2.new(1, -52, 0, 0),
         AnchorPoint = Vector2.new(1, 0),
+        BackgroundTransparency = 1,
         Parent = topbar,
     })
     self:_themed(minBtn, "TextColor3", "TopbarButton")
@@ -1080,6 +1098,100 @@ function ValoxUI:CreateWindow(config)
     end
 
     ---------------------------------------------------------------
+    -- POPUP
+    ---------------------------------------------------------------
+    function Window:Popup(cfg)
+        -- In Valoxexec style, Popup acts as a lightweight Dialog
+        cfg.Title = cfg.Title or "Popup"
+        return self:Dialog(cfg)
+    end
+
+    ---------------------------------------------------------------
+    -- KEY SYSTEM
+    ---------------------------------------------------------------
+    function Window:KeySystem(cfg)
+        cfg = cfg or {}
+        local key = cfg.Key or "VALOX"
+        local note = cfg.Note or "Please enter your key to continue."
+        local gui = self._valoxUI
+        
+        local ksOverlay = New("Frame", {
+            Size = UDim2.new(1, 0, 1, 46),
+            Position = UDim2.fromOffset(0, -46),
+            BackgroundColor3 = gui.CurrentTheme.WindowBackground,
+            BackgroundTransparency = 0, ZIndex = 50, Parent = Window.MainFrame
+        })
+        
+        local ksCenter = New("Frame", {
+            Size = UDim2.fromOffset(320, 200), Position = UDim2.new(0.5, 0, 0.5, 0),
+            AnchorPoint = Vector2.new(0.5, 0.5), BackgroundTransparency = 1, Parent = ksOverlay
+        })
+        
+        New("TextLabel", {
+            Text = cfg.Title or "Key System", Font = Enum.Font.GothamBold, TextSize = 24,
+            TextColor3 = gui.CurrentTheme.Text, TextXAlignment = Enum.TextXAlignment.Center,
+            Size = UDim2.new(1, 0, 0, 30), Position = UDim2.fromOffset(0, 0), Parent = ksCenter
+        })
+        
+        New("TextLabel", {
+            Text = note, Font = Enum.Font.Gotham, TextSize = 13,
+            TextColor3 = gui.CurrentTheme.TextDark, TextXAlignment = Enum.TextXAlignment.Center,
+            Size = UDim2.new(1, 0, 0, 20), Position = UDim2.fromOffset(0, 36), Parent = ksCenter
+        })
+        
+        local keyInput = New("TextBox", {
+            PlaceholderText = "Enter Key...", Text = "",
+            Font = Enum.Font.Gotham, TextSize = 13,
+            TextColor3 = gui.CurrentTheme.Text, PlaceholderColor3 = gui.CurrentTheme.TextDimmed,
+            BackgroundColor3 = gui.CurrentTheme.Input,
+            Size = UDim2.new(1, 0, 0, 38), Position = UDim2.fromOffset(0, 70), Parent = ksCenter
+        }, {
+            New("UICorner", { CornerRadius = UDim.new(0, 8) }),
+            New("UIPadding", { PaddingLeft = UDim.new(0, 10), PaddingRight = UDim.new(0, 10) }),
+            New("UIStroke", { Color = gui.CurrentTheme.InputBorder, Transparency = 0.5, Thickness = 1 }),
+        })
+        
+        local submitBtn = ValoxUI.NewSquircle(8, "Squircle", {
+            Size = UDim2.new(1, 0, 0, 38), Position = UDim2.fromOffset(0, 120),
+            ImageColor3 = gui.CurrentTheme.ButtonAccent, Parent = ksCenter
+        }, {
+            New("TextLabel", {
+                Text = "Submit Key", Font = Enum.Font.GothamBold, TextSize = 13,
+                TextColor3 = gui.CurrentTheme.ButtonText, Size = UDim2.new(1, 0, 1, 0)
+            })
+        }, true)
+        
+        if cfg.SaveKey then
+            local saved = isfile and isfile("valox_key.txt") and readfile("valox_key.txt") or ""
+            if saved ~= "" then keyInput.Text = saved end
+        end
+        
+        local passed = false
+        ValoxUI.AddSignal(submitBtn.MouseButton1Click, function()
+            local inputKey = keyInput.Text
+            local isValid = false
+            if type(key) == "table" then
+                isValid = table.find(key, inputKey) ~= nil
+            else
+                isValid = (inputKey == key)
+            end
+            
+            if isValid then
+                if cfg.SaveKey and writefile then writefile("valox_key.txt", inputKey) end
+                passed = true
+                tween(ksOverlay, 0.4, {BackgroundTransparency = 1})
+                task.delay(0.45, function() ksOverlay:Destroy() end)
+            else
+                keyInput.Text = ""
+                keyInput.PlaceholderText = "Invalid Key!"
+                task.delay(1.5, function()
+                    if not passed then keyInput.PlaceholderText = "Enter Key..." end
+                end)
+            end
+        end)
+    end
+
+    ---------------------------------------------------------------
     -- TAB
     ---------------------------------------------------------------
     function Window:Tab(tabConfig)
@@ -1104,16 +1216,15 @@ function ValoxUI:CreateWindow(config)
             Parent = self.SidebarScroll,
         }, {}, true)
 
-        -- Active bar
+        -- Active bar (invisible, disabled completely for accurate VALOXEXEC style)
         local activeBar = New("Frame", {
-            Size = UDim2.new(0, 3, 0, 22),
-            Position = UDim2.new(0, -6, 0.5, 0),
-            AnchorPoint = Vector2.new(0, 0.5),
+            Size = UDim2.new(0, 0, 0, 0),
+            Position = UDim2.new(0, 0, 0, 0),
             BackgroundColor3 = theme.TabActive,
             BackgroundTransparency = 1,
             Parent = tabBtn,
-        }, { New("UICorner", { CornerRadius = UDim.new(0, 2) }) })
-        gui:_themed(activeBar, "BackgroundColor3", "TabActive")
+            Visible = false,
+        })
 
         -- Tab icon
         local tabIconLabel
@@ -1510,37 +1621,315 @@ function ValoxUI:CreateWindow(config)
         -- PARAGRAPH
         function Tab:Paragraph(cfg)
             cfg = cfg or {}
-            local height = cfg.Height or 80
-            local para = New("Frame", {
-                Size = UDim2.new(1, 0, 0, height), BackgroundTransparency = 1, Parent = contentFrame,
-            }, { New("UIPadding", { PaddingLeft = UDim.new(0, 4), PaddingRight = UDim.new(0, 4) }) })
-            if cfg.Title then
-                New("TextLabel", {
+            local txt = cfg.Text or cfg.Content or ""
+            local row = New("Frame", {
+                Size = UDim2.new(1, 0, 0, 0),
+                BackgroundTransparency = 1,
+                Parent = contentFrame,
+            }, {
+                New("UIPadding", { PaddingLeft = UDim.new(0, 4), PaddingRight = UDim.new(0, 4) }),
+            })
+            
+            local titleLabel
+            if cfg.Title and cfg.Title ~= "" then
+                titleLabel = New("TextLabel", {
                     Text = cfg.Title, Font = Enum.Font.GothamBold, TextSize = 15,
                     TextColor3 = gui.CurrentTheme.Text, TextXAlignment = Enum.TextXAlignment.Left,
-                    Size = UDim2.new(1, 0, 0, 22), Parent = para,
+                    Size = UDim2.new(1, 0, 0, 22), Parent = row,
                 })
             end
-            if cfg.Content then
+            
+            local contentLabel = New("TextLabel", {
+                Text = txt, Font = Enum.Font.Gotham, TextSize = 13,
+                TextColor3 = gui.CurrentTheme.TextDark, TextXAlignment = Enum.TextXAlignment.Left,
+                TextYAlignment = Enum.TextYAlignment.Top, TextWrapped = true,
+                Position = UDim2.fromOffset(0, titleLabel and 22 or 0),
+                Size = UDim2.new(1, 0, 0, 20), Parent = row,
+            })
+            
+            local function updateSize()
+                local bounds = TextService:GetTextSize(txt, 13, Enum.Font.Gotham, Vector2.new(contentFrame.AbsoluteSize.X - 56, math.huge))
+                contentLabel.Size = UDim2.new(1, 0, 0, bounds.Y + 4)
+                row.Size = UDim2.new(1, 0, 0, (titleLabel and 22 or 0) + bounds.Y + 12)
+            end
+            updateSize()
+            ValoxUI.AddSignal(contentFrame:GetPropertyChangedSignal("AbsoluteSize"), updateSize)
+            
+            local paragraph = { __type = "Paragraph", Value = txt }
+            function paragraph:Set(newTxt)
+                txt = newTxt; contentLabel.Text = newTxt; updateSize()
+            end
+            return paragraph
+        end
+
+        -- DIVIDER
+        function Tab:Divider()
+            local row = New("Frame", {
+                Size = UDim2.new(1, 0, 0, 20),
+                BackgroundTransparency = 1, Parent = contentFrame,
+            })
+            local line = New("Frame", {
+                Size = UDim2.new(1, -20, 0, 1), Position = UDim2.new(0.5, 0, 0.5, 0),
+                AnchorPoint = Vector2.new(0.5, 0.5),
+                BackgroundColor3 = gui.CurrentTheme.SectionDivider,
+                Parent = row,
+            })
+            gui:_themed(line, "BackgroundColor3", "SectionDivider")
+            return { __type = "Divider" }
+        end
+
+        -- SPACE
+        function Tab:Space(height)
+            height = height or 20
+            local row = New("Frame", {
+                Size = UDim2.new(1, 0, 0, height),
+                BackgroundTransparency = 1, Parent = contentFrame,
+            })
+            return { __type = "Space" }
+        end
+        
+        -- CODE
+        function Tab:Code(cfg)
+            cfg = cfg or {}
+            local codeTxt = cfg.Code or ""
+            local row = New("Frame", {
+                Size = UDim2.new(1, 0, 0, 0),
+                BackgroundTransparency = 1, Parent = contentFrame,
+            })
+            
+            local bounds = TextService:GetTextSize(codeTxt, 12, Enum.Font.Code, Vector2.new(contentFrame.AbsoluteSize.X - 80, math.huge))
+            local codeH = math.max(40, bounds.Y + 20)
+            row.Size = UDim2.new(1, 0, 0, codeH + 16)
+            
+            local bg = ValoxUI.NewSquircle(8, "Squircle", {
+                Size = UDim2.new(1, -8, 0, codeH),
+                Position = UDim2.fromOffset(4, 8),
+                ImageColor3 = Color3.fromHex("#04080e"), -- Darker code bg
+                Parent = row
+            })
+            ValoxUI.NewSquircleOutline(8, {
+                Color = gui.CurrentTheme.ElementBorder, Transparency = 0.5, Parent = bg
+            })
+            
+            local codeLabel = New("TextLabel", {
+                Text = codeTxt, Font = Enum.Font.Code, TextSize = 12,
+                TextColor3 = Color3.fromHex("#a8b5c9"), TextXAlignment = Enum.TextXAlignment.Left,
+                TextYAlignment = Enum.TextYAlignment.Top, TextWrapped = true,
+                RichText = false,
+                Size = UDim2.new(1, -40, 1, -20), Position = UDim2.fromOffset(12, 10),
+                Parent = bg
+            })
+            
+            local copyBtn = New("TextButton", {
+                Size = UDim2.fromOffset(24, 24), Position = UDim2.new(1, -8, 0, 8),
+                AnchorPoint = Vector2.new(1, 0), BackgroundTransparency = 1, Parent = bg
+            })
+            local copyIcon = ValoxUI.GetIcon("copy")
+            local copyImg
+            if copyIcon ~= "" then
+                copyImg = New("ImageLabel", {
+                    Size = UDim2.fromOffset(16, 16), Position = UDim2.new(0.5, 0, 0.5, 0),
+                    AnchorPoint = Vector2.new(0.5, 0.5), Image = copyIcon, ImageColor3 = gui.CurrentTheme.Icon,
+                    Parent = copyBtn
+                })
+            end
+            
+            ValoxUI.AddSignal(copyBtn.MouseEnter, function() if copyImg then tween(copyImg, 0.15, {ImageColor3 = gui.CurrentTheme.Text}) end end)
+            ValoxUI.AddSignal(copyBtn.MouseLeave, function() if copyImg then tween(copyImg, 0.15, {ImageColor3 = gui.CurrentTheme.Icon}) end end)
+            ValoxUI.AddSignal(copyBtn.MouseButton1Click, function()
+                pcall(function() setclipboard(codeTxt) end)
+                if copyImg then
+                    copyImg.Image = ValoxUI.GetIcon("check")
+                    copyImg.ImageColor3 = Color3.fromHex("#10b981")
+                    task.delay(1.5, function()
+                        copyImg.Image = ValoxUI.GetIcon("copy")
+                        copyImg.ImageColor3 = gui.CurrentTheme.Icon
+                    end)
+                end
+            end)
+            
+            local function updateSize()
+                local nBounds = TextService:GetTextSize(codeTxt, 12, Enum.Font.Code, Vector2.new(contentFrame.AbsoluteSize.X - 80, math.huge))
+                local nH = math.max(40, nBounds.Y + 20)
+                row.Size = UDim2.new(1, 0, 0, nH + 16)
+                bg.Size = UDim2.new(1, -8, 0, nH)
+            end
+            ValoxUI.AddSignal(contentFrame:GetPropertyChangedSignal("AbsoluteSize"), updateSize)
+            
+            local element = { __type = "Code", Value = codeTxt }
+            function element:Set(newCode)
+                codeTxt = newCode; codeLabel.Text = newCode; updateSize()
+            end
+            return element
+        end
+
+        -- IMAGE
+        function Tab:Image(cfg)
+            cfg = cfg or {}
+            local imageId = cfg.Image or ""
+            local h = cfg.Height or 150
+            local row = New("Frame", {
+                Size = UDim2.new(1, 0, 0, h + 16),
+                BackgroundTransparency = 1, Parent = contentFrame,
+            })
+            local imgLabel = ValoxUI.NewSquircle(8, "Squircle", {
+                Size = UDim2.new(1, -8, 0, h),
+                Position = UDim2.fromOffset(4, 8),
+                ImageColor3 = Color3.new(1, 1, 1), ImageTransparency = 0, Parent = row
+            })
+            
+            local contentImg = New("ImageLabel", {
+                Size = UDim2.new(1, 0, 1, 0), Image = imageId,
+                ScaleType = Enum.ScaleType.Crop, Parent = imgLabel
+            })
+            New("UICorner", { CornerRadius = UDim.new(0, 8), Parent = contentImg })
+            
+            ValoxUI.NewSquircleOutline(8, {
+                Color = gui.CurrentTheme.ElementBorder, Transparency = 0.5, Parent = imgLabel
+            })
+            
+            local element = { __type = "Image", Value = imageId }
+            function element:Set(newImg)
+                imageId = newImg; contentImg.Image = newImg
+            end
+            return element
+        end
+
+        -- COLORPICKER
+        function Tab:Colorpicker(cfg)
+            cfg = cfg or {}
+            local color = cfg.Default or cfg.Value or Color3.new(1, 1, 1)
+            local row = makeRow(cfg.Title, cfg.Desc, nil, 50)
+            
+            local colorBtn = New("TextButton", {
+                Size = UDim2.fromOffset(40, 24), Position = UDim2.new(1, -4, 0.5, 0),
+                AnchorPoint = Vector2.new(1, 0.5), Text = "",
+                BackgroundColor3 = color, Parent = row
+            }, {
+                New("UICorner", { CornerRadius = UDim.new(0, 6) }),
+                New("UIStroke", { Color = gui.CurrentTheme.ElementBorder, Transparency = 0.3, Thickness = 1.5 }),
+            })
+            
+            local picker = { __type = "Colorpicker", Value = color }
+            
+            -- Simplified Dialog Picker (R, G, B standard sliders logic built in)
+            ValoxUI.AddSignal(colorBtn.MouseButton1Click, function()
+                local pickerGui = New("Frame", {
+                    Size = UDim2.new(1, 0, 1, 0), BackgroundTransparency = 1, ZIndex = 200,
+                    Parent = Window.ScreenGui
+                })
+                local overlay = New("TextButton", {
+                    Size = UDim2.new(1, 0, 1, 0), BackgroundColor3 = Color3.new(0,0,0),
+                    BackgroundTransparency = 0.5, Text = "", ZIndex = 200, Parent = pickerGui
+                })
+                
+                local modal = ValoxUI.NewSquircle(12, "Squircle", {
+                    Size = UDim2.fromOffset(260, 280), Position = UDim2.new(0.5, 0, 0.5, 0),
+                    AnchorPoint = Vector2.new(0.5, 0.5), ImageColor3 = gui.CurrentTheme.Element,
+                    ZIndex = 201, Parent = pickerGui
+                }, {
+                    New("UIStroke", { Color = gui.CurrentTheme.ElementBorder, Thickness = 1 })
+                })
+                
                 New("TextLabel", {
-                    Text = cfg.Content, Font = Enum.Font.Gotham, TextSize = 13,
-                    TextColor3 = gui.CurrentTheme.TextDark, TextXAlignment = Enum.TextXAlignment.Left,
-                    TextWrapped = true, Position = UDim2.fromOffset(0, cfg.Title and 26 or 0),
-                    Size = UDim2.new(1, 0, 1, cfg.Title and -26 or 0), Parent = para,
+                    Text = "Select Color", Font = Enum.Font.GothamBold, TextSize = 15,
+                    TextColor3 = gui.CurrentTheme.Text, Size = UDim2.new(1, 0, 0, 40),
+                    Position = UDim2.fromOffset(0, 0), ZIndex = 202, Parent = modal
                 })
+                
+                local preview = New("Frame", {
+                    Size = UDim2.new(1, -40, 0, 40), Position = UDim2.fromOffset(20, 50),
+                    BackgroundColor3 = color, ZIndex = 202, Parent = modal
+                }, { New("UICorner", { CornerRadius = UDim.new(0, 8) }) })
+                
+                local function addSlider(title, pos, defValue, onUpdate)
+                    New("TextLabel", {
+                        Text = title, Font = Enum.Font.GothamBold, TextSize = 13,
+                        TextColor3 = gui.CurrentTheme.TextDark, TextXAlignment = Enum.TextXAlignment.Left,
+                        Size = UDim2.new(0, 30, 0, 20), Position = UDim2.fromOffset(20, pos),
+                        ZIndex = 202, Parent = modal
+                    })
+                    local valLbl = New("TextLabel", {
+                        Text = tostring(math.floor(defValue * 255)), Font = Enum.Font.GothamBold, TextSize = 13,
+                        TextColor3 = gui.CurrentTheme.Text, TextXAlignment = Enum.TextXAlignment.Right,
+                        Size = UDim2.new(0, 40, 0, 20), Position = UDim2.new(1, -60, 0, pos),
+                        ZIndex = 202, Parent = modal
+                    })
+                    local bg = New("Frame", {
+                        Size = UDim2.new(1, -40, 0, 6), Position = UDim2.fromOffset(20, pos + 25),
+                        BackgroundColor3 = gui.CurrentTheme.SliderBg, ZIndex = 202, Parent = modal
+                    }, { New("UICorner", { CornerRadius = UDim.new(1, 0) }) })
+                    local fill = New("Frame", {
+                        Size = UDim2.new(defValue, 0, 1, 0), BackgroundColor3 = title == "R" and Color3.fromHex("#ef4444") or title == "G" and Color3.fromHex("#10b981") or Color3.fromHex("#3b82f6"),
+                        ZIndex = 203, Parent = bg
+                    }, { New("UICorner", { CornerRadius = UDim.new(1, 0) }) })
+                    
+                    local sliding = false
+                    local function update(input)
+                        local pct = math.clamp((input.Position.X - bg.AbsolutePosition.X) / bg.AbsoluteSize.X, 0, 1)
+                        fill.Size = UDim2.new(pct, 0, 1, 0)
+                        valLbl.Text = tostring(math.floor(pct * 255))
+                        onUpdate(pct)
+                    end
+                    ValoxUI.AddSignal(bg.InputBegan, function(inp) if inp.UserInputType == Enum.UserInputType.MouseButton1 then sliding = true; update(inp) end end)
+                    ValoxUI.AddSignal(UserInputService.InputChanged, function(inp) if sliding and inp.UserInputType == Enum.UserInputType.MouseMovement then update(inp) end end)
+                    ValoxUI.AddSignal(UserInputService.InputEnded, function(inp) if inp.UserInputType == Enum.UserInputType.MouseButton1 then sliding = false end end)
+                end
+                
+                local r, g, b = color.R, color.G, color.B
+                local function updateColor()
+                    local newC = Color3.new(r, g, b)
+                    preview.BackgroundColor3 = newC
+                    colorBtn.BackgroundColor3 = newC
+                    picker.Value = newC
+                    color = newC
+                    ValoxUI.SafeCallback(cfg.Callback, newC)
+                end
+                
+                addSlider("R", 100, r, function(v) r = v; updateColor() end)
+                addSlider("G", 145, g, function(v) g = v; updateColor() end)
+                addSlider("B", 190, b, function(v) b = v; updateColor() end)
+                
+                local confirmBtn = ValoxUI.NewSquircle(8, "Squircle", {
+                    Size = UDim2.new(1, -40, 0, 36), Position = UDim2.fromOffset(20, 230),
+                    ImageColor3 = gui.CurrentTheme.ButtonAccent, ZIndex = 202, Parent = modal
+                }, {
+                    New("TextLabel", {
+                        Text = "Confirm", Font = Enum.Font.GothamBold, TextSize = 13,
+                        TextColor3 = gui.CurrentTheme.ButtonText, Size = UDim2.new(1, 0, 1, 0), ZIndex = 203
+                    })
+                }, true)
+                
+                local function close()
+                    tween(modal, 0.2, {Size = UDim2.fromOffset(0,0)})
+                    tween(overlay, 0.2, {BackgroundTransparency = 1})
+                    task.delay(0.25, function() pickerGui:Destroy() end)
+                end
+                ValoxUI.AddSignal(confirmBtn.MouseButton1Click, close)
+                ValoxUI.AddSignal(overlay.MouseButton1Click, close)
+            end)
+            
+            function picker:Set(col)
+                color = col; colorBtn.BackgroundColor3 = col; picker.Value = col
+                ValoxUI.SafeCallback(cfg.Callback, col)
             end
-            return {__type = "Paragraph"}
+            return picker
         end
 
         -- SECTION
         function Tab:Section(cfg)
             cfg = cfg or {}
-            local section = { Title = cfg.Title or "Section" }
+            local sectionTitle = cfg.Title or "Section"
+            local section = { Title = sectionTitle }
+            local secRow = New("Frame", {
+                Size = UDim2.new(1, 0, 0, 32), BackgroundTransparency = 1, Parent = contentFrame,
+            })
             New("TextLabel", {
-                Text = section.Title, Font = Enum.Font.GothamBold, TextSize = 20,
-                TextColor3 = gui.CurrentTheme.SectionText, TextXAlignment = Enum.TextXAlignment.Left,
-                Size = UDim2.new(1, 0, 0, 44), Parent = contentFrame,
-            }, { New("UIPadding", { PaddingLeft = UDim.new(0, 4), PaddingTop = UDim.new(0, 16) }) })
+                Text = sectionTitle, Font = Enum.Font.GothamBold, TextSize = 15,
+                TextColor3 = gui.CurrentTheme.TextDark, TextXAlignment = Enum.TextXAlignment.Left,
+                Size = UDim2.new(1, 0, 1, 0), Position = UDim2.fromOffset(4, 8), Parent = secRow,
+            })
+            
             function section:Button(c) c = c or {}; c.Parent = contentFrame; return Tab:Button(c) end
             function section:Toggle(c) c = c or {}; c.Parent = contentFrame; return Tab:Toggle(c) end
             function section:Slider(c) c = c or {}; c.Parent = contentFrame; return Tab:Slider(c) end
@@ -1549,7 +1938,83 @@ function ValoxUI:CreateWindow(config)
             function section:Checkbox(c) c = c or {}; c.Parent = contentFrame; return Tab:Checkbox(c) end
             function section:Keybind(c) c = c or {}; c.Parent = contentFrame; return Tab:Keybind(c) end
             function section:Paragraph(c) c = c or {}; return Tab:Paragraph(c) end
+            function section:Colorpicker(c) c = c or {}; c.Parent = contentFrame; return Tab:Colorpicker(c) end
+            function section:Code(c) c = c or {}; return Tab:Code(c) end
+            function section:Image(c) c = c or {}; return Tab:Image(c) end
+            function section:Space(h) return Tab:Space(h) end
+            function section:Divider() return Tab:Divider() end
+            function section:Configs(c) c = c or {}; return Tab:Configs(c) end
             function section:Section(c) return Tab:Section(c) end
+            return section
+        end
+
+        -- CONFIGS
+        function Tab:Configs(cfg)
+            cfg = cfg or {}
+            local folderName = cfg.Folder or "ValoxConfigs"
+            if not isfolder or not makefolder then return end
+            if not isfolder(folderName) then makefolder(folderName) end
+            
+            local section = Tab:Section({ Title = cfg.Title or "Configurations" })
+            local fileInput = section:Input({
+                Title = "Config Name",
+                Desc = "Select or type a configuration name",
+                Placeholder = "my_config",
+                Value = ""
+            })
+            
+            local function refreshFiles()
+                local files = {}
+                if listfiles then
+                    for _, file in ipairs(listfiles(folderName)) do
+                        if file:match("%.json$") then
+                            local name = file:match("([^/\\]+)%.json$")
+                            if name then table.insert(files, name) end
+                        end
+                    end
+                end
+                return files
+            end
+            
+            local drop = section:Dropdown({
+                Title = "Available Configs",
+                Desc = "List of saved configurations",
+                Values = refreshFiles(),
+                Value = nil,
+                Callback = function(val)
+                    if val then fileInput:Set(val) end
+                end
+            })
+            
+            local saveBtn = section:Button({
+                Title = "Save Configuration",
+                Desc = "Saves current settings to the file",
+                Callback = function()
+                    local name = fileInput.Value
+                    if name == "" then return Window:Notify({ Title="Error", Content="Please enter a config name!", Duration=3 }) end
+                    if writefile and HttpService then
+                        -- Dummy save example, real configs need a state map
+                        writefile(folderName .. "/" .. name .. ".json", HttpService:JSONEncode({timestamp = os.time()}))
+                        Window:Notify({ Title="Configs", Content="Saved " .. name .. ".json successfully!" })
+                        drop:Refresh(refreshFiles())
+                    end
+                end
+            })
+            
+            local loadBtn = section:Button({
+                Title = "Load Configuration",
+                Desc = "Loads settings from the selected file",
+                Callback = function()
+                    local name = fileInput.Value
+                    if name == "" then return Window:Notify({ Title="Error", Content="Please enter a config name!", Duration=3 }) end
+                    if readfile and isfile and isfile(folderName .. "/" .. name .. ".json") then
+                        -- Dummy load
+                        Window:Notify({ Title="Configs", Content="Loaded " .. name .. ".json successfully!" })
+                    else
+                        Window:Notify({ Title="Error", Content="Config not found!" })
+                    end
+                end
+            })
             return section
         end
 

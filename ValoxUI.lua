@@ -59,6 +59,7 @@ function ValoxUI:CreateWindow(options)
     local Title = options.Title or "ValoxUI"
     local Size = options.Size or UDim2.fromOffset(750, 480)
     local Folder = options.Folder or "ValoxUI"
+    local Theme = self.Theme
 
     -- Find Parent
     local Parent = nil
@@ -82,18 +83,18 @@ function ValoxUI:CreateWindow(options)
         Size = Size,
         Position = UDim2.fromScale(0.5, 0.5),
         AnchorPoint = Vector2.new(0.5, 0.5),
-        BackgroundColor3 = self.Theme.Background,
+        BackgroundColor3 = Theme.Background,
         ClipsDescendants = true,
         Parent = ScreenGui
     })
     Round(MainFrame, 8)
-    Stroke(MainFrame, self.Theme.Border, 1)
+Stroke(MainFrame, Theme.Border, 1)
 
     -- Topbar
     local Topbar = Create("Frame", {
         Name = "Topbar",
         Size = UDim2.new(1, 0, 0, 40),
-        BackgroundColor3 = self.Theme.Topbar,
+        BackgroundColor3 = Theme.Topbar,
         BorderSizePixel = 0,
         Parent = MainFrame
     })
@@ -104,7 +105,7 @@ function ValoxUI:CreateWindow(options)
         Position = UDim2.fromOffset(20, 0),
         BackgroundTransparency = 1,
         Text = Title,
-        TextColor3 = self.Theme.Text,
+        TextColor3 = Theme.Text,
         TextXAlignment = Enum.TextXAlignment.Left,
         Font = FontBold,
         TextSize = 14,
@@ -116,7 +117,7 @@ function ValoxUI:CreateWindow(options)
         Name = "Sidebar",
         Size = UDim2.new(0, 200, 1, -40),
         Position = UDim2.fromOffset(0, 40),
-        BackgroundColor3 = self.Theme.Sidebar,
+        BackgroundColor3 = Theme.Sidebar,
         BorderSizePixel = 0,
         Parent = MainFrame
     })
@@ -126,7 +127,7 @@ function ValoxUI:CreateWindow(options)
         Name = "SidebarLine",
         Size = UDim2.new(0, 1, 1, 0),
         Position = UDim2.fromScale(1, 0),
-        BackgroundColor3 = self.Theme.Border,
+        BackgroundColor3 = Theme.Border,
         BorderSizePixel = 0,
         Parent = Sidebar
     })
@@ -253,12 +254,12 @@ function ValoxUI:CreateWindow(options)
             Size = UDim2.new(0, 300, 0, 150),
             Position = UDim2.new(0.5, 0, 0.45, 0), -- Slightly above center initially for animated drop
             AnchorPoint = Vector2.new(0.5, 0.5),
-            BackgroundColor3 = self.Theme.ElementBackground,
+            BackgroundColor3 = Theme.ElementBackground,
             ZIndex = 101,
             Parent = self.DialogContainer
         })
         Round(DialogBox, 8)
-        Stroke(DialogBox, self.Theme.Border, 1)
+Stroke(DialogBox, Theme.Border, 1)
 
         -- Dropdown animation
         TweenService:Create(DialogBox, TweenInfo.new(0.4, Enum.EasingStyle.Back, Enum.EasingDirection.Out), {Position = UDim2.new(0.5, 0, 0.5, 0)}):Play()
@@ -269,7 +270,7 @@ function ValoxUI:CreateWindow(options)
             Position = UDim2.fromOffset(20, 10),
             BackgroundTransparency = 1,
             Text = DlgTitle,
-            TextColor3 = self.Theme.Text,
+            TextColor3 = Theme.Text,
             TextXAlignment = Enum.TextXAlignment.Left,
             Font = FontBold,
             TextSize = 16,
@@ -283,7 +284,7 @@ function ValoxUI:CreateWindow(options)
             Position = UDim2.fromOffset(20, 40),
             BackgroundTransparency = 1,
             Text = DlgContent,
-            TextColor3 = self.Theme.TextMuted,
+            TextColor3 = Theme.TextMuted,
             TextXAlignment = Enum.TextXAlignment.Left,
             TextYAlignment = Enum.TextYAlignment.Top,
             TextWrapped = true,
@@ -323,9 +324,9 @@ function ValoxUI:CreateWindow(options)
             local DialogBtn = Create("TextButton", {
                 Name = btn.Title or "Button",
                 Size = UDim2.new(0, 100, 1, 0),
-                BackgroundColor3 = btn.Variant == "Primary" and self.Theme.Accent or self.Theme.Background,
+                BackgroundColor3 = btn.Variant == "Primary" and Theme.Accent or Theme.Background,
                 Text = btn.Title or "Button",
-                TextColor3 = self.Theme.Text,
+                TextColor3 = Theme.Text,
                 Font = FontSemiBold,
                 TextSize = 14,
                 AutoButtonColor = false,
@@ -333,7 +334,7 @@ function ValoxUI:CreateWindow(options)
                 Parent = ButtonContainer
             })
             Round(DialogBtn, 6)
-            Stroke(DialogBtn, self.Theme.Border, 1)
+Stroke(DialogBtn, Theme.Border, 1)
 
             DialogBtn.MouseButton1Click:Connect(function()
                 if btn.Callback then btn.Callback() end
@@ -351,7 +352,7 @@ function ValoxUI:CreateWindow(options)
         local TabBtn = Create("TextButton", {
             Name = TabTitle,
             Size = UDim2.new(1, -20, 0, 35),
-            BackgroundColor3 = ValoxUI.Theme.Sidebar,
+            BackgroundColor3 = Theme.Sidebar,
             BackgroundTransparency = 1,
             Text = "",
             AutoButtonColor = false,
@@ -365,7 +366,7 @@ function ValoxUI:CreateWindow(options)
             Position = UDim2.fromOffset(35, 0),
             BackgroundTransparency = 1,
             Text = TabTitle,
-            TextColor3 = ValoxUI.Theme.TextMuted,
+            TextColor3 = Theme.TextMuted,
             TextXAlignment = Enum.TextXAlignment.Left,
             Font = FontSemiBold,
             TextSize = 13,
@@ -378,7 +379,7 @@ function ValoxUI:CreateWindow(options)
             Position = UDim2.new(0, 10, 0.5, -8),
             BackgroundTransparency = 1,
             Image = TabIcon,
-            ImageColor3 = ValoxUI.Theme.TextMuted,
+            ImageColor3 = Theme.TextMuted,
             Parent = TabBtn
         })
 
@@ -389,7 +390,7 @@ function ValoxUI:CreateWindow(options)
             Position = UDim2.fromOffset(10, 10),
             BackgroundTransparency = 1,
             ScrollBarThickness = 2,
-            ScrollBarImageColor3 = ValoxUI.Theme.Border,
+            ScrollBarImageColor3 = Theme.Border,
             CanvasSize = UDim2.new(0, 0, 0, 0),
             Visible = false,
             Parent = ContentContainer
@@ -430,14 +431,14 @@ function ValoxUI:CreateWindow(options)
             for _, t in pairs(Window.Tabs) do
                 t.Content.Visible = false
                 TweenService:Create(t.Button, TweenInfo.new(0.3), {BackgroundTransparency = 1}):Play()
-                TweenService:Create(t.Button.Title, TweenInfo.new(0.3), {TextColor3 = ValoxUI.Theme.TextMuted}):Play()
-                TweenService:Create(t.Button.Icon, TweenInfo.new(0.3), {ImageColor3 = ValoxUI.Theme.TextMuted}):Play()
+                TweenService:Create(t.Button.Title, TweenInfo.new(0.3), {TextColor3 = Theme.TextMuted}):Play()
+                TweenService:Create(t.Button.Icon, TweenInfo.new(0.3), {ImageColor3 = Theme.TextMuted}):Play()
             end
 
             TabContent.Visible = true
-            TweenService:Create(TabBtn, TweenInfo.new(0.3), {BackgroundTransparency = 0, BackgroundColor3 = ValoxUI.Theme.Accent}):Play()
-            TweenService:Create(TabBtnText, TweenInfo.new(0.3), {TextColor3 = ValoxUI.Theme.Text}):Play()
-            TweenService:Create(TabBtnIcon, TweenInfo.new(0.3), {ImageColor3 = ValoxUI.Theme.Text}):Play()
+            TweenService:Create(TabBtn, TweenInfo.new(0.3), {BackgroundTransparency = 0, BackgroundColor3 = Theme.Accent}):Play()
+            TweenService:Create(TabBtnText, TweenInfo.new(0.3), {TextColor3 = Theme.Text}):Play()
+            TweenService:Create(TabBtnIcon, TweenInfo.new(0.3), {ImageColor3 = Theme.Text}):Play()
             Window.CurrentTab = TabTitle
         end
 
@@ -464,7 +465,7 @@ function ValoxUI:CreateWindow(options)
                 Size = UDim2.new(1, 0, 1, 0),
                 BackgroundTransparency = 1,
                 Text = SecTitle,
-                TextColor3 = ValoxUI.Theme.Text,
+                TextColor3 = Theme.Text,
                 TextXAlignment = Enum.TextXAlignment.Left,
                 Font = FontBold,
                 TextSize = 14,
@@ -490,7 +491,7 @@ function ValoxUI:CreateWindow(options)
                 Size = UDim2.new(1, 0, 1, 0),
                 BackgroundTransparency = 1,
                 Text = LabelText,
-                TextColor3 = ValoxUI.Theme.TextMuted,
+                TextColor3 = Theme.TextMuted,
                 TextWrapped = true,
                 TextXAlignment = Enum.TextXAlignment.Left,
                 Font = FontRegular,
@@ -515,13 +516,13 @@ function ValoxUI:CreateWindow(options)
             local ButtonFrame = Create("TextButton", {
                 Name = BtnTitle .. "_Button",
                 Size = UDim2.new(1, -10, 0, BtnDesc == "" and 40 or 50),
-                BackgroundColor3 = ValoxUI.Theme.ElementBackground,
+                BackgroundColor3 = Theme.ElementBackground,
                 Text = "",
                 AutoButtonColor = false,
                 Parent = TabContent
             })
             Round(ButtonFrame, 6)
-            Stroke(ButtonFrame, ValoxUI.Theme.Border, 1)
+Stroke(ButtonFrame, Theme.Border, 1)
 
             local TitleLabel = Create("TextLabel", {
                 Name = "Title",
@@ -529,7 +530,7 @@ function ValoxUI:CreateWindow(options)
                 Position = UDim2.fromOffset(10, BtnDesc == "" and 10 or 5),
                 BackgroundTransparency = 1,
                 Text = BtnTitle,
-                TextColor3 = ValoxUI.Theme.Text,
+                TextColor3 = Theme.Text,
                 TextXAlignment = Enum.TextXAlignment.Left,
                 Font = FontSemiBold,
                 TextSize = 14,
@@ -543,7 +544,7 @@ function ValoxUI:CreateWindow(options)
                     Position = UDim2.fromOffset(10, 25),
                     BackgroundTransparency = 1,
                     Text = BtnDesc,
-                    TextColor3 = ValoxUI.Theme.TextMuted,
+                    TextColor3 = Theme.TextMuted,
                     TextXAlignment = Enum.TextXAlignment.Left,
                     Font = FontRegular,
                     TextSize = 12,
@@ -558,7 +559,7 @@ function ValoxUI:CreateWindow(options)
                 Position = UDim2.new(1, -25, 0.5, -7),
                 BackgroundTransparency = 1,
                 Image = "rbxassetid://10888331510", -- You can replace with a tap/click icon
-                ImageColor3 = ValoxUI.Theme.TextMuted,
+                ImageColor3 = Theme.TextMuted,
                 Parent = ButtonFrame
             })
 
@@ -568,7 +569,7 @@ function ValoxUI:CreateWindow(options)
             end)
 
             ButtonFrame.MouseLeave:Connect(function()
-                TweenService:Create(ButtonFrame, TweenInfo.new(0.2), {BackgroundColor3 = ValoxUI.Theme.ElementBackground}):Play()
+                TweenService:Create(ButtonFrame, TweenInfo.new(0.2), {BackgroundColor3 = Theme.ElementBackground}):Play()
             end)
 
             ButtonFrame.MouseButton1Down:Connect(function()
@@ -595,13 +596,13 @@ function ValoxUI:CreateWindow(options)
             local ToggleFrame = Create("TextButton", {
                 Name = ToggleTitle .. "_Toggle",
                 Size = UDim2.new(1, -10, 0, ToggleDesc == "" and 40 or 50),
-                BackgroundColor3 = ValoxUI.Theme.ElementBackground,
+                BackgroundColor3 = Theme.ElementBackground,
                 Text = "",
                 AutoButtonColor = false,
                 Parent = TabContent
             })
             Round(ToggleFrame, 6)
-            Stroke(ToggleFrame, ValoxUI.Theme.Border, 1)
+Stroke(ToggleFrame, Theme.Border, 1)
 
             local TitleLabel = Create("TextLabel", {
                 Name = "Title",
@@ -609,7 +610,7 @@ function ValoxUI:CreateWindow(options)
                 Position = UDim2.fromOffset(10, ToggleDesc == "" and 10 or 5),
                 BackgroundTransparency = 1,
                 Text = ToggleTitle,
-                TextColor3 = ValoxUI.Theme.Text,
+                TextColor3 = Theme.Text,
                 TextXAlignment = Enum.TextXAlignment.Left,
                 Font = FontSemiBold,
                 TextSize = 14,
@@ -623,7 +624,7 @@ function ValoxUI:CreateWindow(options)
                     Position = UDim2.fromOffset(10, 25),
                     BackgroundTransparency = 1,
                     Text = ToggleDesc,
-                    TextColor3 = ValoxUI.Theme.TextMuted,
+                    TextColor3 = Theme.TextMuted,
                     TextXAlignment = Enum.TextXAlignment.Left,
                     Font = FontRegular,
                     TextSize = 12,
@@ -651,7 +652,7 @@ function ValoxUI:CreateWindow(options)
             Round(SwitchCircle, 8)
 
             local function PlayAnimation()
-                local bgGoal = State and ValoxUI.Theme.Accent or ValoxUI.Theme.Border
+                local bgGoal = State and Theme.Accent or Theme.Border
                 local posGoal = State and UDim2.new(0, 22, 0.5, -8) or UDim2.new(0, 2, 0.5, -8)
 
                 TweenService:Create(SwitchBg, TweenInfo.new(0.25, Enum.EasingStyle.Quart, Enum.EasingDirection.Out), {BackgroundColor3 = bgGoal}):Play()
@@ -687,11 +688,11 @@ function ValoxUI:CreateWindow(options)
             local SliderFrame = Create("Frame", {
                 Name = SliderTitle .. "_Slider",
                 Size = UDim2.new(1, -10, 0, SliderDesc == "" and 55 or 65),
-                BackgroundColor3 = ValoxUI.Theme.ElementBackground,
+                BackgroundColor3 = Theme.ElementBackground,
                 Parent = TabContent
             })
             Round(SliderFrame, 6)
-            Stroke(SliderFrame, ValoxUI.Theme.Border, 1)
+Stroke(SliderFrame, Theme.Border, 1)
 
             local TitleLabel = Create("TextLabel", {
                 Name = "Title",
@@ -699,7 +700,7 @@ function ValoxUI:CreateWindow(options)
                 Position = UDim2.fromOffset(10, 5),
                 BackgroundTransparency = 1,
                 Text = SliderTitle,
-                TextColor3 = ValoxUI.Theme.Text,
+                TextColor3 = Theme.Text,
                 TextXAlignment = Enum.TextXAlignment.Left,
                 Font = FontSemiBold,
                 TextSize = 14,
@@ -712,7 +713,7 @@ function ValoxUI:CreateWindow(options)
                 Position = UDim2.new(1, -50, 0, 5),
                 BackgroundTransparency = 1,
                 Text = tostring(Value),
-                TextColor3 = ValoxUI.Theme.TextMuted,
+                TextColor3 = Theme.TextMuted,
                 TextXAlignment = Enum.TextXAlignment.Right,
                 Font = FontSemiBold,
                 TextSize = 14,
@@ -726,7 +727,7 @@ function ValoxUI:CreateWindow(options)
                     Position = UDim2.fromOffset(10, 22),
                     BackgroundTransparency = 1,
                     Text = SliderDesc,
-                    TextColor3 = ValoxUI.Theme.TextMuted,
+                    TextColor3 = Theme.TextMuted,
                     TextXAlignment = Enum.TextXAlignment.Left,
                     Font = FontRegular,
                     TextSize = 12,
@@ -739,7 +740,7 @@ function ValoxUI:CreateWindow(options)
                 Name = "SliderBg",
                 Size = UDim2.new(1, -20, 0, 8),
                 Position = UDim2.new(0, 10, 1, -15),
-                BackgroundColor3 = ValoxUI.Theme.Border,
+                BackgroundColor3 = Theme.Border,
                 Parent = SliderFrame
             })
             Round(SliderBg, 4)
@@ -747,7 +748,7 @@ function ValoxUI:CreateWindow(options)
             local SliderFill = Create("Frame", {
                 Name = "SliderFill",
                 Size = UDim2.new((Value - Min) / (Max - Min), 0, 1, 0),
-                BackgroundColor3 = ValoxUI.Theme.Accent,
+                BackgroundColor3 = Theme.Accent,
                 Parent = SliderBg
             })
             Round(SliderFill, 4)
@@ -817,7 +818,7 @@ function ValoxUI:CreateWindow(options)
             local InputFrame = Create("Frame", {
                 Name = InputTitle .. "_Input",
                 Size = UDim2.new(1, -10, 0, InputDesc == "" and 40 or 50),
-                BackgroundColor3 = ValoxUI.Theme.ElementBackground,
+                BackgroundColor3 = Theme.ElementBackground,
                 Parent = TabContent
             })
             Round(InputFrame, 6)
@@ -829,7 +830,7 @@ function ValoxUI:CreateWindow(options)
                 Position = UDim2.fromOffset(10, InputDesc == "" and 10 or 5),
                 BackgroundTransparency = 1,
                 Text = InputTitle,
-                TextColor3 = ValoxUI.Theme.Text,
+                TextColor3 = Theme.Text,
                 TextXAlignment = Enum.TextXAlignment.Left,
                 Font = FontSemiBold,
                 TextSize = 14,
@@ -843,7 +844,7 @@ function ValoxUI:CreateWindow(options)
                     Position = UDim2.fromOffset(10, 25),
                     BackgroundTransparency = 1,
                     Text = InputDesc,
-                    TextColor3 = ValoxUI.Theme.TextMuted,
+                    TextColor3 = Theme.TextMuted,
                     TextXAlignment = Enum.TextXAlignment.Left,
                     Font = FontRegular,
                     TextSize = 12,
@@ -855,7 +856,7 @@ function ValoxUI:CreateWindow(options)
                 Name = "TextBoxBg",
                 Size = UDim2.new(0, 130, 0, 28),
                 Position = UDim2.new(1, -140, 0.5, -14),
-                BackgroundColor3 = ValoxUI.Theme.Background,
+                BackgroundColor3 = Theme.Background,
                 Parent = InputFrame
             })
             Round(TextBoxBg, 4)
@@ -868,7 +869,7 @@ function ValoxUI:CreateWindow(options)
                 BackgroundTransparency = 1,
                 Text = Default,
                 PlaceholderText = Placeholder,
-                TextColor3 = ValoxUI.Theme.Text,
+                TextColor3 = Theme.Text,
                 PlaceholderColor3 = ValoxUI.Theme.TextMuted,
                 TextXAlignment = Enum.TextXAlignment.Left,
                 Font = FontRegular,
@@ -878,11 +879,11 @@ function ValoxUI:CreateWindow(options)
             })
 
             TextBox.Focused:Connect(function()
-                TweenService:Create(FrameStroke, TweenInfo.new(0.2), {Color = ValoxUI.Theme.Accent}):Play()
+                TweenService:Create(FrameStroke, TweenInfo.new(0.2), {Color = Theme.Accent}):Play()
             end)
 
             TextBox.FocusLost:Connect(function()
-                TweenService:Create(FrameStroke, TweenInfo.new(0.2), {Color = ValoxUI.Theme.Border}):Play()
+                TweenService:Create(FrameStroke, TweenInfo.new(0.2), {Color = Theme.Border}):Play()
                 InputCallback(TextBox.Text)
             end)
 
@@ -909,7 +910,7 @@ function ValoxUI:CreateWindow(options)
             local DropFrame = Create("Frame", {
                 Name = DropTitle .. "_Dropdown",
                 Size = UDim2.new(1, -10, 0, DropDesc == "" and 40 or 50),
-                BackgroundColor3 = ValoxUI.Theme.ElementBackground,
+                BackgroundColor3 = Theme.ElementBackground,
                 ClipsDescendants = true,
                 Parent = TabContent
             })
@@ -930,7 +931,7 @@ function ValoxUI:CreateWindow(options)
                 Position = UDim2.fromOffset(10, DropDesc == "" and 10 or 5),
                 BackgroundTransparency = 1,
                 Text = DropTitle,
-                TextColor3 = ValoxUI.Theme.Text,
+                TextColor3 = Theme.Text,
                 TextXAlignment = Enum.TextXAlignment.Left,
                 Font = FontSemiBold,
                 TextSize = 14,
@@ -944,7 +945,7 @@ function ValoxUI:CreateWindow(options)
                     Position = UDim2.fromOffset(10, 25),
                     BackgroundTransparency = 1,
                     Text = DropDesc,
-                    TextColor3 = ValoxUI.Theme.TextMuted,
+                    TextColor3 = Theme.TextMuted,
                     TextXAlignment = Enum.TextXAlignment.Left,
                     Font = FontRegular,
                     TextSize = 12,
@@ -958,7 +959,7 @@ function ValoxUI:CreateWindow(options)
                 Position = UDim2.new(1, -145, 0.5, -10),
                 BackgroundTransparency = 1,
                 Text = Selected == nil and "None" or tostring(Selected),
-                TextColor3 = ValoxUI.Theme.TextMuted,
+                TextColor3 = Theme.TextMuted,
                 TextXAlignment = Enum.TextXAlignment.Right,
                 Font = FontRegular,
                 TextSize = 13,
@@ -971,7 +972,7 @@ function ValoxUI:CreateWindow(options)
                 Position = UDim2.new(1, -25, 0.5, -7),
                 BackgroundTransparency = 1,
                 Image = "rbxassetid://10888331510", -- Plus/Chevron icon
-                ImageColor3 = ValoxUI.Theme.TextMuted,
+                ImageColor3 = Theme.TextMuted,
                 Parent = DropButton
             })
 
@@ -981,7 +982,7 @@ function ValoxUI:CreateWindow(options)
                 Position = UDim2.fromOffset(10, DropDesc == "" and 40 or 50),
                 BackgroundTransparency = 1,
                 ScrollBarThickness = 2,
-                ScrollBarImageColor3 = ValoxUI.Theme.Border,
+                ScrollBarImageColor3 = Theme.Border,
                 CanvasSize = UDim2.new(0, 0, 0, 0),
                 Parent = DropFrame
             })
@@ -1028,9 +1029,9 @@ function ValoxUI:CreateWindow(options)
 
                 for _, btn in pairs(OptionBtns) do
                     if btn.Name == "Option_" .. tostring(Selected) then
-                        TweenService:Create(btn.Indicator, TweenInfo.new(0.2), {BackgroundColor3 = ValoxUI.Theme.Accent}):Play()
+                        TweenService:Create(btn.Indicator, TweenInfo.new(0.2), {BackgroundColor3 = Theme.Accent}):Play()
                     else
-                        TweenService:Create(btn.Indicator, TweenInfo.new(0.2), {BackgroundColor3 = ValoxUI.Theme.Background}):Play()
+                        TweenService:Create(btn.Indicator, TweenInfo.new(0.2), {BackgroundColor3 = Theme.Background}):Play()
                     end
                 end
                 
@@ -1052,10 +1053,10 @@ function ValoxUI:CreateWindow(options)
                     local OptBtn = Create("TextButton", {
                         Name = "Option_" .. valName,
                         Size = UDim2.new(1, 0, 0, 25),
-                        BackgroundColor3 = ValoxUI.Theme.Background,
+                        BackgroundColor3 = Theme.Background,
                         BackgroundTransparency = 1,
                         Text = "  " .. valName,
-                        TextColor3 = ValoxUI.Theme.TextMuted,
+                        TextColor3 = Theme.TextMuted,
                         TextXAlignment = Enum.TextXAlignment.Left,
                         Font = FontRegular,
                         TextSize = 13,
@@ -1080,13 +1081,13 @@ function ValoxUI:CreateWindow(options)
                     end
 
                     OptBtn.MouseEnter:Connect(function()
-                        TweenService:Create(OptBtn, TweenInfo.new(0.1), {BackgroundTransparency = 0, TextColor3 = ValoxUI.Theme.Text}):Play()
+                        TweenService:Create(OptBtn, TweenInfo.new(0.1), {BackgroundTransparency = 0, TextColor3 = Theme.Text}):Play()
                         if Selected ~= (isObj and v or valName) then
-                            TweenService:Create(Indicator, TweenInfo.new(0.1), {Position = UDim2.new(0, 0, 0.5, -7), BackgroundColor3 = ValoxUI.Theme.Border}):Play()
+                            TweenService:Create(Indicator, TweenInfo.new(0.1), {Position = UDim2.new(0, 0, 0.5, -7), BackgroundColor3 = Theme.Border}):Play()
                         end
                     end)
                     OptBtn.MouseLeave:Connect(function()
-                        TweenService:Create(OptBtn, TweenInfo.new(0.1), {BackgroundTransparency = 1, TextColor3 = ValoxUI.Theme.TextMuted}):Play()
+                        TweenService:Create(OptBtn, TweenInfo.new(0.1), {BackgroundTransparency = 1, TextColor3 = Theme.TextMuted}):Play()
                         if Selected ~= (isObj and v or valName) then
                             TweenService:Create(Indicator, TweenInfo.new(0.1), {Position = UDim2.new(0, -6, 0.5, -7)}):Play()
                         end
@@ -1125,11 +1126,11 @@ function ValoxUI:CreateWindow(options)
             local KeyFrame = Create("Frame", {
                 Name = KeyTitle .. "_Keybind",
                 Size = UDim2.new(1, -10, 0, KeyDesc == "" and 40 or 50),
-                BackgroundColor3 = ValoxUI.Theme.ElementBackground,
+                BackgroundColor3 = Theme.ElementBackground,
                 Parent = TabContent
             })
             Round(KeyFrame, 6)
-            local FrameStroke = Stroke(KeyFrame, ValoxUI.Theme.Border, 1)
+Stroke(KeyFrame, Theme.Border, 1)
 
             local TitleLabel = Create("TextLabel", {
                 Name = "Title",
@@ -1137,7 +1138,7 @@ function ValoxUI:CreateWindow(options)
                 Position = UDim2.fromOffset(10, KeyDesc == "" and 10 or 5),
                 BackgroundTransparency = 1,
                 Text = KeyTitle,
-                TextColor3 = ValoxUI.Theme.Text,
+                TextColor3 = Theme.Text,
                 TextXAlignment = Enum.TextXAlignment.Left,
                 Font = FontSemiBold,
                 TextSize = 14,
@@ -1151,7 +1152,7 @@ function ValoxUI:CreateWindow(options)
                     Position = UDim2.fromOffset(10, 25),
                     BackgroundTransparency = 1,
                     Text = KeyDesc,
-                    TextColor3 = ValoxUI.Theme.TextMuted,
+                    TextColor3 = Theme.TextMuted,
                     TextXAlignment = Enum.TextXAlignment.Left,
                     Font = FontRegular,
                     TextSize = 12,
@@ -1163,22 +1164,22 @@ function ValoxUI:CreateWindow(options)
                 Name = "BindButton",
                 Size = UDim2.new(0, 80, 0, 26),
                 Position = UDim2.new(1, -90, 0.5, -13),
-                BackgroundColor3 = ValoxUI.Theme.Background,
+                BackgroundColor3 = Theme.Background,
                 Text = tostring(CurrentKey),
-                TextColor3 = ValoxUI.Theme.Text,
+                TextColor3 = Theme.Text,
                 Font = FontSemiBold,
                 TextSize = 13,
                 AutoButtonColor = false,
                 Parent = KeyFrame
             })
             Round(BindButton, 4)
-            local BindStroke = Stroke(BindButton, ValoxUI.Theme.Border, 1)
+Stroke(BindButton, Theme.Border, 1)
 
             BindButton.MouseButton1Click:Connect(function()
                 if not IsBinding then
                     IsBinding = true
                     BindButton.Text = "..."
-                    TweenService:Create(BindStroke, TweenInfo.new(0.2), {Color = ValoxUI.Theme.Accent}):Play()
+                    TweenService:Create(BindStroke, TweenInfo.new(0.2), {Color = Theme.Accent}):Play()
                 end
             end)
 
@@ -1191,7 +1192,7 @@ function ValoxUI:CreateWindow(options)
                         CurrentKey = key
                         BindButton.Text = CurrentKey
                         IsBinding = false
-                        TweenService:Create(BindStroke, TweenInfo.new(0.2), {Color = ValoxUI.Theme.Border}):Play()
+                        TweenService:Create(BindStroke, TweenInfo.new(0.2), {Color = Theme.Border}):Play()
                         KeyCallback(CurrentKey)
                     end
                 elseif not IsBinding and input.UserInputType == Enum.UserInputType.Keyboard then
@@ -1219,11 +1220,11 @@ function ValoxUI:CreateWindow(options)
             local ParaFrame = Create("Frame", {
                 Name = ParaTitle .. "_Paragraph",
                 Size = UDim2.new(1, -10, 0, 0), -- calculated below
-                BackgroundColor3 = ValoxUI.Theme.ElementBackground,
+                BackgroundColor3 = Theme.ElementBackground,
                 Parent = TabContent
             })
             Round(ParaFrame, 6)
-            Stroke(ParaFrame, ValoxUI.Theme.Border, 1)
+Stroke(ParaFrame, Theme.Border, 1)
 
             -- Optional Image
             local ImageObj
@@ -1248,7 +1249,7 @@ function ValoxUI:CreateWindow(options)
                 Position = UDim2.fromOffset(textOffsetX, 10),
                 BackgroundTransparency = 1,
                 Text = ParaTitle,
-                TextColor3 = ValoxUI.Theme.Text,
+                TextColor3 = Theme.Text,
                 TextXAlignment = Enum.TextXAlignment.Left,
                 Font = FontBold,
                 TextSize = 14,
@@ -1261,7 +1262,7 @@ function ValoxUI:CreateWindow(options)
                 Position = UDim2.fromOffset(textOffsetX, 35),
                 BackgroundTransparency = 1,
                 Text = ParaText,
-                TextColor3 = ValoxUI.Theme.TextMuted,
+                TextColor3 = Theme.TextMuted,
                 TextXAlignment = Enum.TextXAlignment.Left,
                 TextYAlignment = Enum.TextYAlignment.Top,
                 TextWrapped = true,
@@ -1298,7 +1299,7 @@ function ValoxUI:CreateWindow(options)
             local DividerFrame = Create("Frame", {
                 Name = "Divider",
                 Size = UDim2.new(1, -10, 0, 1),
-                BackgroundColor3 = ValoxUI.Theme.Border,
+                BackgroundColor3 = Theme.Border,
                 BorderSizePixel = 0,
                 Parent = TabContent
             })
@@ -1330,6 +1331,7 @@ function ValoxUI:Notify(notifOptions)
     local Title = notifOptions.Title or "Notification"
     local Content = notifOptions.Content or ""
     local Duration = notifOptions.Duration or 3
+    local Theme = self.Theme
 
     -- Find Container
     local Parent = nil
@@ -1345,12 +1347,12 @@ function ValoxUI:Notify(notifOptions)
     local NotifFrame = Create("Frame", {
         Name = "Notification",
         Size = UDim2.new(1, 0, 0, Content == "" and 40 or 60),
-        BackgroundColor3 = ValoxUI.Theme.ElementBackground,
+        BackgroundColor3 = Theme.ElementBackground,
         BackgroundTransparency = 1,
         Parent = Container
     })
     Round(NotifFrame, 6)
-    local FrameStroke = Stroke(NotifFrame, ValoxUI.Theme.Border, 1)
+    local FrameStroke = Stroke(NotifFrame, Theme.Border, 1)
     FrameStroke.Transparency = 1
 
     local TitleLabel = Create("TextLabel", {
@@ -1359,7 +1361,7 @@ function ValoxUI:Notify(notifOptions)
         Position = UDim2.fromOffset(10, Content == "" and 10 or 5),
         BackgroundTransparency = 1,
         Text = Title,
-        TextColor3 = ValoxUI.Theme.Text,
+        TextColor3 = Theme.Text,
         TextTransparency = 1,
         TextXAlignment = Enum.TextXAlignment.Left,
         Font = FontBold,
@@ -1374,7 +1376,7 @@ function ValoxUI:Notify(notifOptions)
             Position = UDim2.fromOffset(10, 25),
             BackgroundTransparency = 1,
             Text = Content,
-            TextColor3 = ValoxUI.Theme.TextMuted,
+            TextColor3 = Theme.TextMuted,
             TextTransparency = 1,
             TextXAlignment = Enum.TextXAlignment.Left,
             TextYAlignment = Enum.TextYAlignment.Top,

@@ -9,7 +9,7 @@
     To view the source code, see the `src/` folder on the official GitHub repository.
     
     Author: Footagesus (Footages, .ftgs, oftgs)
-    Github: https://github.com/Footagesus/WindUI
+    Github: https://github.com/Footagesus/ValoxUI
     Discord: https://discord.gg/ftgs-development-hub-1300692552005189632
     License: MIT
 ]]
@@ -245,7 +245,7 @@ if not u then
 if m and m.Window and m.Window.Debug then local
 x, z=v:find":%d+: "
 
-warn("[ WindUI: DEBUG Mode ] "..v)
+warn("[ ValoxUI: DEBUG Mode ] "..v)
 
 return m:Notify{
 Title="DEBUG Mode: Error",
@@ -404,7 +404,7 @@ for x,z in pairs(v.Properties or{})do
 local A=p.GetThemeProperty(z,p.Theme)
 if A~=nil then
 if typeof(A)=="Color3"then
-local B=v.Object:FindFirstChild"WindUIGradient"
+local B=v.Object:FindFirstChild"ValoxUIGradient"
 if B then
 B:Destroy()
 end
@@ -417,10 +417,10 @@ end
 elseif typeof(A)=="table"and A.Color and A.Transparency then
 v.Object[x]=Color3.new(1,1,1)
 
-local B=v.Object:FindFirstChild"WindUIGradient"
+local B=v.Object:FindFirstChild"ValoxUIGradient"
 if not B then
 B=Instance.new"UIGradient"
-B.Name="WindUIGradient"
+B.Name="ValoxUIGradient"
 B.Parent=v.Object
 end
 
@@ -441,7 +441,7 @@ end
 end
 else
 
-local B=v.Object:FindFirstChild"WindUIGradient"
+local B=v.Object:FindFirstChild"ValoxUIGradient"
 if B then
 B:Destroy()
 end
@@ -776,7 +776,7 @@ Colors={
 }.IconFrame
 M.Parent=L
 elseif string.find(v,"http")then
-local M="WindUI/"..C.."/assets/."..F.."-"..x..".png"
+local M="ValoxUI/"..C.."/assets/."..F.."-"..x..".png"
 local N,O=pcall(function()
 task.spawn(function()
 local N=p.Request{
@@ -791,7 +791,7 @@ local O,P=pcall(getcustomasset,M)
 if O then
 L.ImageLabel.Image=P
 else
-warn(string.format("[ WindUI.Creator ] Failed to load custom asset '%s': %s",M,tostring(P)))
+warn(string.format("[ ValoxUI.Creator ] Failed to load custom asset '%s': %s",M,tostring(P)))
 L:Destroy()
 
 return
@@ -799,7 +799,7 @@ end
 end)
 end)
 if not N then
-warn("[ WindUI.Creator ]  '"..identifyexecutor().."' doesnt support the URL Images. Error: "..O)
+warn("[ ValoxUI.Creator ]  '"..identifyexecutor().."' doesnt support the URL Images. Error: "..O)
 
 L:Destroy()
 end
@@ -1639,10 +1639,10 @@ New=a.load'g'.New
 
 return[[
 {
-    "name": "windui",
+    "name": "ValoxUI",
     "version": "1.6.63",
     "main": "./dist/main.lua",
-    "repository": "https://github.com/Footagesus/WindUI",
+    "repository": "https://github.com/Footagesus/ValoxUI",
     "discord": "https://discord.gg/ftgs-development-hub-1300692552005189632",
     "author": "Footagesus",
     "description": "Roblox UI Library for scripts",
@@ -2116,7 +2116,7 @@ local ae=a.load'j'.New
 local af=a.load'k'.New
 
 function aa.new(ag,ah,ai,aj)
-local ak=a.load'l'.Init(nil,ag.WindUI.ScreenGui.KeySystem)
+local ak=a.load'l'.Init(nil,ag.ValoxUI.ScreenGui.KeySystem)
 local al=ak.Create(true)
 
 local am={}
@@ -2426,7 +2426,7 @@ PaddingBottom=UDim.new(0,10),
 })
 
 for d,f in next,ag.KeySystem.API do
-local g=ag.WindUI.Services[f.Type]
+local g=ag.ValoxUI.Services[f.Type]
 if g then
 local h={}
 for j,l in next,g.Args do
@@ -2512,7 +2512,7 @@ ad(r,0.08,{ImageTransparency=1}):Play()
 end)
 ab.AddSignal(r.MouseButton1Click,function()
 m.Copy()
-ag.WindUI:Notify{
+ag.ValoxUI:Notify{
 Title="Key System",
 Content="Key link copied to clipboard.",
 Image="key",
@@ -2557,7 +2557,7 @@ task.wait(.4)
 ai(true)
 end
 else
-ag.WindUI:Notify{
+ag.ValoxUI:Notify{
 Title="Key System. Error",
 Content="Invalid key.",
 Icon="triangle-alert",
@@ -2591,7 +2591,7 @@ end
 if aC then
 handleSuccess(aA)
 else
-ag.WindUI:Notify{
+ag.ValoxUI:Notify{
 Title="Key System. Error",
 Content=aD,
 Icon="triangle-alert",
@@ -2986,7 +2986,7 @@ Buttons=ae.Buttons,
 IconSize=22,
 }
 
-local ag=a.load'l'.Init(nil,ae.WindUI.ScreenGui.Popups)
+local ag=a.load'l'.Init(nil,ae.ValoxUI.ScreenGui.Popups)
 local ah=ag.Create(true,"Popup")
 
 local ai=200
@@ -3008,7 +3008,7 @@ ak=ab.Image(
 af.Icon,
 af.Title..":"..af.Icon,
 0,
-ae.WindUI.Window,
+ae.ValoxUI.Window,
 "Popup",
 true,
 ae.IconThemed,
@@ -3926,18 +3926,18 @@ end
 
 function ad.Init(ae,af)
 if not af.Folder then
-warn"[ WindUI.ConfigManager ] Window.Folder is not specified."
+warn"[ ValoxUI.ConfigManager ] Window.Folder is not specified."
 return false
 end
 
 ac=af
 ad.Folder=ac.Folder
-ad.Path="WindUI/"..tostring(ad.Folder).."/config/"
+ad.Path="ValoxUI/"..tostring(ad.Folder).."/config/"
 
-if not isfolder("WindUI/"..ad.Folder)then
-makefolder("WindUI/"..ad.Folder)
-if not isfolder("WindUI/"..ad.Folder.."/config/")then
-makefolder("WindUI/"..ad.Folder.."/config/")
+if not isfolder("ValoxUI/"..ad.Folder)then
+makefolder("ValoxUI/"..ad.Folder)
+if not isfolder("ValoxUI/"..ad.Folder.."/config/")then
+makefolder("ValoxUI/"..ad.Folder.."/config/")
 end
 end
 
@@ -4020,7 +4020,7 @@ end
 
 local aj,ak=pcall(function()
 local aj=readfile or function()
-warn"[ WindUI.ConfigManager ] The config system doesn't work in the studio."
+warn"[ ValoxUI.ConfigManager ] The config system doesn't work in the studio."
 return nil
 end
 return ab:JSONDecode(aj(ah.Path))
@@ -4107,9 +4107,9 @@ local ak,al=pcall(function()
 return ah:Load()
 end)
 if ak then
-if ac.Debug then print("[ WindUI.ConfigManager ] AutoLoaded config: "..af)end
+if ac.Debug then print("[ ValoxUI.ConfigManager ] AutoLoaded config: "..af)end
 else
-warn("[ WindUI.ConfigManager ] Failed to AutoLoad config: "..af.." - "..tostring(al))
+warn("[ ValoxUI.ConfigManager ] Failed to AutoLoad config: "..af.." - "..tostring(al))
 end
 end)
 end
@@ -5570,7 +5570,7 @@ Thickness=1.5,
 Transparency=1,
 ApplyStrokeMode="Border",
 })
-})
+}})
 }),
 
 
@@ -6163,9 +6163,9 @@ ImageTransparency=.6,
 
 
 }),
-})
-})
-})
+}})
+}})
+}})
 
 ak.UIElements.SliderContainer=ae("Frame",{
 Size=UDim2.new(ak.Title==nil and 1 or 0,ak.Title==nil and 0 or ak.Width,0,0),
@@ -6719,7 +6719,7 @@ Position=UDim2.new(-10,0,-10,0),
 Visible=false,
 Active=false,
 
-Parent=am.WindUI.DropdownGui,
+Parent=am.ValoxUI.DropdownGui,
 AnchorPoint=Vector2.new(1,0),
 },{
 an.UIElements.Menu,
@@ -7825,7 +7825,7 @@ toclipboard(al.Code)
 if al.OnCopy then al.OnCopy()end
 end)
 if not ao then
-ak.WindUI:Notify{
+ak.ValoxUI:Notify{
 Title="Error",
 Content="The "..an.." is not copied. Error: "..ap,
 Icon="x",
@@ -7833,7 +7833,7 @@ Duration=5,
 }
 end
 end
-end,ak.WindUI.UIScale,al)
+end,ak.ValoxUI.UIScale,al)
 
 function al.SetCode(ao,ap)
 an.Set(ap)
@@ -8772,7 +8772,7 @@ al.ElementFrame=ar
 
 local as=ak.ElementsModule
 
-as.Load(al,ar.Content,as.Elements,ak.Window,ak.WindUI,function()
+as.Load(al,ar.Content,as.Elements,ak.Window,ak.ValoxUI,function()
 if not al.Expandable then
 al.Expandable=true
 an.Visible=true
@@ -8988,7 +8988,7 @@ ak,
 al,
 am.Elements,
 aj.Window,
-aj.WindUI,
+aj.ValoxUI,
 function(an,ao)
 local ap=aj.Tab and aj.Tab.Gap or(aj.Window.NewElements and 1 or 6)
 
@@ -9068,7 +9068,7 @@ ar.Index=#aa.Elements+1
 ar.GlobalIndex=#ah.AllElements+1
 ar.Parent=ae
 ar.Window=ah
-ar.WindUI=aj
+ar.ValoxUI=aj
 ar.UIScale=am
 ar.ElementsModule=al local
 
@@ -9091,7 +9091,7 @@ end)
 if ax then
 ah.PendingConfigData[ar.Flag]=nil
 else
-warn("[ WindUI ] Failed to apply pending config for '"..ar.Flag.."': "..tostring(ay))
+warn("[ ValoxUI ] Failed to apply pending config for '"..ar.Flag.."': "..tostring(ay))
 end
 end)
 end
@@ -9201,7 +9201,7 @@ OnChangeFunc=function(am)end
 
 function am.Init(an,ao,ap,aq)
 Window=an
-WindUI=ao
+ValoxUI=ao
 am.ToolTipParent=ap
 am.TabHighlight=aq
 return am
@@ -9596,7 +9596,7 @@ end
 
 local az=a.load'T'
 
-az.Load(ap,ap.UIElements.ContainerFrame,az.Elements,Window,WindUI,nil,az,ao)
+az.Load(ap,ap.UIElements.ContainerFrame,az.Elements,Window,ValoxUI,nil,az,ao)
 
 
 
@@ -10566,11 +10566,11 @@ au.Topbar={Height=52,ButtonsType="Default"}
 end
 
 if au.Folder then
-if not isfolder("WindUI/"..au.Folder)then
-makefolder("WindUI/"..au.Folder)
+if not isfolder("ValoxUI/"..au.Folder)then
+makefolder("ValoxUI/"..au.Folder)
 end
-if not isfolder("WindUI/"..au.Folder.."/assets")then
-makefolder("WindUI/"..au.Folder.."/assets")
+if not isfolder("ValoxUI/"..au.Folder.."/assets")then
+makefolder("ValoxUI/"..au.Folder.."/assets")
 end
 if not isfolder(au.Folder)then
 makefolder(au.Folder)
@@ -10963,7 +10963,7 @@ local g=ak.Request{Url=b,Method="GET",Headers={["User-Agent"]="Roblox/Exploit"}}
 writefile(f,g.Body)
 end)
 if not g then
-warn("[ WindUI.Window.Background ] Failed to download video: "..tostring(h))
+warn("[ ValoxUI.Window.Background ] Failed to download video: "..tostring(h))
 return
 end
 end
@@ -10972,10 +10972,10 @@ local g,h=pcall(function()
 return getcustomasset(f)
 end)
 if not g then
-warn("[ WindUI.Window.Background ] Failed to load custom asset: "..tostring(h))
+warn("[ ValoxUI.Window.Background ] Failed to load custom asset: "..tostring(h))
 return
 end
-warn"[ WindUI.Window.Background ] VideoFrame may not work with custom video"
+warn"[ ValoxUI.Window.Background ] VideoFrame may not work with custom video"
 b=h
 end
 
@@ -11105,7 +11105,7 @@ Parent=as.Parent,
 AnchorPoint=Vector2.new(0.5,0.5),
 Active=true,
 },{
-as.WindUI.UIScaleObj,
+as.ValoxUI.UIScaleObj,
 au.AcrylicPaint and au.AcrylicPaint.Frame or nil,
 aA,
 ak.NewRoundFrame(au.UICorner,"Squircle",{
@@ -11246,13 +11246,13 @@ PaddingBottom=UDim.new(0,au.UIPadding),
 
 ak.AddSignal(au.UIElements.Main.Main.Topbar.Left:GetPropertyChangedSignal"AbsoluteSize",function()
 local l=0
-local m=au.UIElements.Main.Main.Topbar.Right.UIListLayout.AbsoluteContentSize.X/as.WindUI.UIScale
+local m=au.UIElements.Main.Main.Topbar.Right.UIListLayout.AbsoluteContentSize.X/as.ValoxUI.UIScale
 
 
 
 
 
-l=au.UIElements.Main.Main.Topbar.Left.AbsoluteSize.X/as.WindUI.UIScale
+l=au.UIElements.Main.Main.Topbar.Left.AbsoluteSize.X/as.ValoxUI.UIScale
 if au.Topbar.ButtonsType~="Default"then
 l=l+m+au.UIPadding-4
 end
@@ -11261,13 +11261,13 @@ end
 
 au.UIElements.Main.Main.Topbar.Center.Position=UDim2.new(
 0,
-l+(au.UIPadding/as.WindUI.UIScale),
+l+(au.UIPadding/as.ValoxUI.UIScale),
 0.5,
 0
 )
 au.UIElements.Main.Main.Topbar.Center.Size=UDim2.new(
 1,
--l-m-((au.UIPadding*2)/as.WindUI.UIScale),
+-l-m-((au.UIPadding*2)/as.ValoxUI.UIScale),
 1,
 0
 )
@@ -11275,7 +11275,7 @@ end)
 
 if au.Topbar.ButtonsType~="Default"then
 ak.AddSignal(au.UIElements.Main.Main.Topbar.Right:GetPropertyChangedSignal"AbsoluteSize",function()
-au.UIElements.Main.Main.Topbar.Left.Position=UDim2.new(0,(au.UIElements.Main.Main.Topbar.Right.AbsoluteSize.X/as.WindUI.UIScale)+au.UIPadding-4,0,0)
+au.UIElements.Main.Main.Topbar.Left.Position=UDim2.new(0,(au.UIElements.Main.Main.Topbar.Right.AbsoluteSize.X/as.ValoxUI.UIScale)+au.UIPadding-4,0,0)
 end)
 end
 
@@ -11410,7 +11410,7 @@ end
 au.UIElements.BackgroundGradient=ak.NewRoundFrame(au.UICorner,"Squircle",{
 Size=UDim2.new(1,0,1,0),
 Parent=au.UIElements.Main.Background,
-ImageTransparency=au.Transparent and as.WindUI.TransparencyValue or 0
+ImageTransparency=au.Transparent and as.ValoxUI.TransparencyValue or 0
 },{
 m
 })
@@ -11513,7 +11513,7 @@ end
 
 function au.SetBackgroundTransparency(m,p)
 local r=math.floor(tonumber(p)*10+0.5)/10
-as.WindUI.TransparencyValue=r
+as.ValoxUI.TransparencyValue=r
 au:ToggleTransparency(r>0)
 end
 
@@ -11588,7 +11588,7 @@ function au.OnDestroy(r,u)
 au.OnDestroyCallback=u
 end
 
-if as.WindUI.UseAcrylic then
+if as.ValoxUI.UseAcrylic then
 au.AcrylicPaint.AddParent(au.UIElements.Main)
 end
 
@@ -11620,7 +11620,7 @@ task.wait(.06)
 au.Closed=false
 
 am(au.UIElements.Main.Background,0.2,{
-ImageTransparency=au.Transparent and as.WindUI.TransparencyValue or 0,
+ImageTransparency=au.Transparent and as.ValoxUI.TransparencyValue or 0,
 },Enum.EasingStyle.Quint,Enum.EasingDirection.Out):Play()
 
 if au.UIElements.BackgroundGradient then
@@ -11672,7 +11672,7 @@ task.spawn(function()
 task.wait(.05)
 au.UIElements.Main:WaitForChild"Main".Visible=true
 
-as.WindUI:ToggleAcrylic(true)
+as.ValoxUI:ToggleAcrylic(true)
 end)
 end)
 end
@@ -11685,7 +11685,7 @@ ak.SafeCallback(au.OnCloseCallback)
 end)
 end
 
-as.WindUI:ToggleAcrylic(false)
+as.ValoxUI:ToggleAcrylic(false)
 
 au.UIElements.Main:WaitForChild"Main".Visible=false
 
@@ -11746,10 +11746,10 @@ au.AcrylicPaint.Model:Destroy()
 end
 au.Destroyed=true
 task.wait(0.4)
-as.WindUI.ScreenGui:Destroy()
-as.WindUI.NotificationGui:Destroy()
-as.WindUI.DropdownGui:Destroy()
-as.WindUI.TooltipGui:Destroy()
+as.ValoxUI.ScreenGui:Destroy()
+as.ValoxUI.NotificationGui:Destroy()
+as.ValoxUI.DropdownGui:Destroy()
+as.ValoxUI.TooltipGui:Destroy()
 
 ak.DisconnectAll()
 
@@ -11774,9 +11774,9 @@ end
 function au.ToggleTransparency(r,u)
 
 au.Transparent=u
-as.WindUI.Transparent=u
+as.ValoxUI.Transparent=u
 
-au.UIElements.Main.Background.ImageTransparency=u and as.WindUI.TransparencyValue or 0
+au.UIElements.Main.Background.ImageTransparency=u and as.ValoxUI.TransparencyValue or 0
 
 au.UIElements.MainBar.Background.ImageTransparency=u and 0.97 or 0.95
 
@@ -11812,12 +11812,12 @@ return u
 end
 
 function au.GetUIScale(r,u)
-return as.WindUI.UIScale
+return as.ValoxUI.UIScale
 end
 
 function au.SetUIScale(r,u)
-as.WindUI.UIScale=u
-am(as.WindUI.UIScaleObj,.2,{Scale=u},Enum.EasingStyle.Quint,Enum.EasingDirection.Out):Play()
+as.ValoxUI.UIScale=u
+am(as.ValoxUI.UIScaleObj,.2,{Scale=u},Enum.EasingStyle.Quint,Enum.EasingDirection.Out):Play()
 return au
 end
 
@@ -11893,14 +11893,14 @@ end
 
 local r=a.load'U'
 local u=a.load'V'
-local v=r.Init(au,as.WindUI,as.WindUI.TooltipGui)
+local v=r.Init(au,as.ValoxUI,as.ValoxUI.TooltipGui)
 v:OnChange(function(x)au.CurrentTab=x end)
 
 au.TabModule=v
 
 function au.Tab(x,B)
 B.Parent=au.UIElements.SideBar.Frame
-return v.New(B,as.WindUI.UIScale)
+return v.New(B,as.ValoxUI.UIScale)
 end
 
 function au.SelectTab(x,B)
@@ -11908,7 +11908,7 @@ v:SelectTab(B)
 end
 
 function au.Section(x,B)
-return u.New(B,au.UIElements.SideBar.Frame,au.Folder,as.WindUI.UIScale,au)
+return u.New(B,au.UIElements.SideBar.Frame,au.Folder,as.ValoxUI.UIScale,au)
 end
 
 function au.IsResizable(x,B)
@@ -12100,8 +12100,8 @@ end
 
 wait()
 
-local S=L.AbsoluteContentSize.X/as.WindUI.UIScale
-local T=M.AbsoluteSize.X/as.WindUI.UIScale
+local S=L.AbsoluteContentSize.X/as.ValoxUI.UIScale
+local T=M.AbsoluteSize.X/as.ValoxUI.UIScale
 
 if S>T then
 L.FillDirection=Enum.FillDirection.Vertical
@@ -12120,7 +12120,7 @@ local V
 local W=math.huge
 
 for X,Y in ipairs(N)do
-local _=Y.AbsoluteSize.X/as.WindUI.UIScale
+local _=Y.AbsoluteSize.X/as.ValoxUI.UIScale
 if _<W then
 W=_
 V=Y
@@ -12435,7 +12435,7 @@ Scale=aa.Scale,
 aa.UIScaleObj=av
 
 aa.ScreenGui=ap("ScreenGui",{
-Name="WindUI",
+Name="ValoxUI",
 Parent=au,
 IgnoreGuiInset=true,
 ScreenInsets="None",
@@ -12462,17 +12462,17 @@ Name="ToolTips"
 })
 
 aa.NotificationGui=ap("ScreenGui",{
-Name="WindUI/Notifications",
+Name="ValoxUI/Notifications",
 Parent=au,
 IgnoreGuiInset=true,
 })
 aa.DropdownGui=ap("ScreenGui",{
-Name="WindUI/Dropdowns",
+Name="ValoxUI/Dropdowns",
 Parent=au,
 IgnoreGuiInset=true,
 })
 aa.TooltipGui=ap("ScreenGui",{
-Name="WindUI/Tooltips",
+Name="ValoxUI/Tooltips",
 Parent=au,
 IgnoreGuiInset=true,
 })
@@ -12607,7 +12607,7 @@ end
 
 
 function aa.Popup(ax,ay)
-ay.WindUI=aa
+ay.ValoxUI=aa
 return a.load'r'.new(ay)
 end
 
@@ -12624,8 +12624,8 @@ aa:SetLanguage(ao.Language)
 function aa.CreateWindow(ax,ay)
 local az=a.load'Y'
 
-if not isfolder"WindUI"then
-makefolder"WindUI"
+if not isfolder"ValoxUI"then
+makefolder"ValoxUI"
 end
 if ay.Folder then
 makefolder(ay.Folder)
@@ -12633,7 +12633,7 @@ else
 makefolder(ay.Title)
 end
 
-ay.WindUI=aa
+ay.ValoxUI=aa
 ay.Parent=aa.ScreenGui.Window
 
 if aa.Window then
